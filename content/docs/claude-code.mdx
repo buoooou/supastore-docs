@@ -1,0 +1,98 @@
+---
+title: Claude Code 终端接入
+description: 如何将 Anthropic 官方的 Claude Code 命令行交互式编程助理接入 SupaStore。
+date: "2026-05-25"
+---
+
+[Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) 是 Anthropic 官方推出的命令行交互式 AI 编程代理工具。它不仅能够直接读取和写入您的本地文件，还能够执行终端命令、分析 Git 提交、搜索代码库等。
+
+通过 SupaStore 中转，您可以在没有 Anthropic Console 官方开发者账号或未绑定外卡的情况下，使用 SupaStore 的 API 密钥和接口直接启动并运行 Claude Code。
+
+---
+
+## 🛠️ 配置接入方式
+
+目前主要有两种方式将 Claude Code 接口流量重定向至 SupaStore：
+
+### 方式一：修改配置文件 `settings.json` (推荐)
+
+这是最稳定的持久化配置方案。即使重启终端或电脑，配置也会一直保留。
+
+1. 进入系统命令行界面。
+2. 编辑或新增 Claude Code 配置文件 `~/.claude/settings.json`（在 Windows 上通常位于 `C:\Users\您的用户名\.claude\settings.json`）。
+3. 在 JSON 配置的 `env` 字段中，增加 `ANTHROPIC_BASE_URL` 和 `ANTHROPIC_AUTH_TOKEN`。
+
+配置文件内容示例如下：
+
+```json
+{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "您的SupaStore_API_KEY",
+    "ANTHROPIC_BASE_URL": "https://supastore.cc/v1",
+    "API_TIMEOUT_MS": "300000",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+  }
+}
+```
+
+> [!IMPORTANT]
+> - 请注意将上面的 `"您的SupaStore_API_KEY"` 替换为您在 SupaStore 控制台获取的以 `sk-` 开头的真实密钥。
+> - 配置保存后，在命令行中直接运行 `claude` 即可自动读取该配置启动服务。
+
+---
+
+### 方式二：使用环境变量 (临时/快速测试)
+
+如果您只是想快速体验或在一台临时服务器上运行，可以直接在启动命令前配置环境变量。
+
+#### macOS / Linux 终端配置：
+```bash
+export ANTHROPIC_BASE_URL="https://supastore.cc/v1"
+export ANTHROPIC_AUTH_TOKEN="YOUR_SUPASTORE_API_KEY"
+
+# 启动 Claude Code
+claude
+```
+
+#### Windows PowerShell 终端配置：
+```powershell
+$env:ANTHROPIC_BASE_URL="https://supastore.cc/v1"
+$env:ANTHROPIC_AUTH_TOKEN="YOUR_SUPASTORE_API_KEY"
+
+# 启动 Claude Code
+claude
+```
+
+---
+
+## 🚀 启动与使用示例
+
+当您成功配置并启动 `claude` 后，Claude Code 会扫描您的当前项目，并进入一个交互式的 Shell 命令行界面。
+
+您可以输入自然语言与它互动，例如：
+
+* **代码解析与问答**：
+  ```bash
+  > 这个项目是用什么技术栈写的？入口文件在哪里？
+  ```
+* **自动生成与编辑文件**：
+  ```bash
+  > 请帮我在 components 目录下新建一个 button.tsx 组件，需要包含 tailwind 的幽灵按钮样式。
+  ```
+* **诊断与排障**：
+  ```bash
+  > 为什么我运行 npm run build 会报错，请读取报错信息并帮我修复。
+  ```
+
+---
+
+## ⚡ 性能调优建议
+
+由于 Claude Code 在运行期间可能会对您的代码库进行高频次的检索与多步骤推理（会产生巨大的 Context Tokens），我们建议：
+
+1. **账户余额充足**：使用前确保您的 **[充值钱包](https://supastore.cc/console/topup)** 有足够余额，防止由于中途欠费导致多步骤任务被异常中断。
+2. **过滤多余文件**：在项目根目录下配置 `.gitignore` 或 `.claudeignore`，排除如 `node_modules`、`.next`、`dist` 等构建产物和临时缓存文件夹，以大幅减少 Token 的消耗并提升响应速度。
+
+---
+
+*最后更新：2026-05-25*

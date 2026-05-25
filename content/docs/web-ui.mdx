@@ -1,0 +1,72 @@
+---
+title: Web UI & 客户端工具接入
+description: 详细讲解如何将 SupaStore 接入 NextChat (ChatGPT Next Web)、LobeChat 以及桌面端 Cherry Studio 等工具。
+date: "2026-05-25"
+---
+
+除了专业的代码编辑器，您也可以使用主流的网页端或桌面端聊天工具来连接 SupaStore，进行日常对话、文档翻译、角色扮演或图片生成等任务。
+
+---
+
+## 🎨 LobeChat (网页版 / 桌面端)
+
+[LobeChat](https://github.com/lobehub/lobe-chat) 是目前设计最精美、功能最全的开源对话客户端，支持语音、插件、知识库和多模态交互。
+
+### 配置指南
+
+1. 启动并登录您的 LobeChat。
+2. 点击左下角的 **齿轮 (设置)** 按钮，选择 **语言模型 (Language Model)**。
+3. 在左侧列表中，选择 **OpenAI**。
+4. **API Key**：填入您的 SupaStore `sk-` 密钥。
+5. **代理地址 (Proxy URL)**：开启自定义代理，并输入：
+   ```bash
+   https://supastore.cc/v1
+   ```
+6. **模型列表**：在模型列表中，按需勾选开启如 `gpt-4o`, `gpt-4o-mini` 等常用模型。
+7. **自定义模型**：如果需要使用 `claude-3-5-sonnet-latest` 等其他模型，在下方自定义模型输入框中填入 `claude-3-5-sonnet-latest` 并勾选启用。
+8. 确认保存即可在主界面新建会话中开始使用。
+
+---
+
+## 💬 NextChat (ChatGPT Next Web)
+
+[NextChat](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web) 是一个轻量级、响应迅速的 Web 对话端。
+
+### 配置指南
+
+1. 打开 NextChat 主界面。
+2. 点击左下角的 **设置** 按钮（齿轮图标）。
+3. 滚动到 **模型服务配置**（Model Provider）区域。
+4. 选择服务商为 **OpenAI**。
+5. **接口地址 (Endpoint)**：修改为 SupaStore 的中继地址：
+   ```bash
+   https://supastore.cc/v1
+   ```
+6. **API Key**：填入您的 SupaStore 密钥。
+7. **自定义模型名**：在自定义模型（Custom Models）输入框中填入：
+   `+claude-3-5-sonnet-latest,+deepseek-chat,+deepseek-reasoner`
+   （这会让这些模型出现在您的选择列表里）。
+8. 返回对话界面，在顶部模型下拉框中切换为您刚才添加的自定义模型，即可发起请求。
+
+---
+
+## 🍒 Cherry Studio (桌面端推荐)
+
+[Cherry Studio](https://cherry-ai.com/) 是一款专为电脑桌面端设计的跨平台多模型聚合管理软件，交互体验极其流畅，支持本地知识库。
+
+### 配置指南
+
+1. 下载并安装 Cherry Studio 客户端。
+2. 打开软件，点击左下角的 **设置**。
+3. 在左侧模型供应商（Providers）中，选择 **OpenAI** 或新建一个 **自定义 (Custom)** 供应商。
+4. **API Key**：输入您的 SupaStore 密钥。
+5. **API 地址 (API URL)**：输入：
+   ```bash
+   https://supastore.cc/v1
+   ```
+6. 点击 **获取模型列表**（如果有此按钮）或者手动在模型管理中添加 `claude-3-5-sonnet-latest`, `deepseek-chat`, `gpt-4o` 等模型。
+7. 在对话主页面中选择刚才配置的 OpenAI 供应侧，即可畅享顶级大模型对话。
+
+---
+
+*最后更新：2026-05-25*

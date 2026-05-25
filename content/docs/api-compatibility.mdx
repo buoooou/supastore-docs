@@ -1,0 +1,81 @@
+---
+title: API 兼容性与模型
+description: SupaStore 支持的模型系列、计费费率说明与最基础的 API 请求测试。
+date: "2026-05-25"
+---
+
+SupaStore 提供完全兼容 **OpenAI REST API** 的接口规范。您可以直接使用主流编程语言的官方 `openai` 库来发起请求，或者通过任何支持自定义 API 地址（Base URL）的第三方软件来接入。
+
+---
+
+## 🌟 支持的模型列表
+
+我们聚合了全球最顶尖的闭源与开源模型，提供一站式接入：
+
+| 模型厂商 | 模型 ID (API Model String) | 计费倍率 (对比官方) | 适用场景与优势 |
+| :--- | :--- | :--- | :--- |
+| **Anthropic** | `claude-3-5-sonnet-latest` / `claude-3-5-sonnet-20241022` | 1:1 | 行业公认最强编程与逻辑推理模型 |
+| | `claude-3-5-haiku-latest` | 1:1 | 极速响应，适合轻量级辅助与单行补全 |
+| | `claude-3-opus-latest` | 1:1 | 深度逻辑推理、长文本分析 |
+| **OpenAI** | `gpt-4o` | 1:1 | 综合性能强劲，多模态（视觉）表现卓越 |
+| | `gpt-4o-mini` | 1:1 | 性价比极高，极速响应 |
+| | `o1-mini` / `o1-preview` | 1:1 | 复杂数理、算法和逻辑强化推理 |
+| | `o3-mini` | 1:1 | 支持推理步骤控制，编程任务极其出色 |
+| **DeepSeek** | `deepseek-chat` (对齐 V3) | 1:1 | 国产之光，高性价比通用对话与基础编程 |
+| | `deepseek-reasoner` (对齐 R1) | 1:1 | 开源强化学习推理模型，长思考链，逻辑极强 |
+| **Google** | `gemini-2.5-pro` / `gemini-2.5-flash` | 1:1 | 支持超长上下文（2M Tokens），多模态表现佳 |
+
+---
+
+## 🛠️ 请求地址与格式
+
+* **API Base URL**: `https://supastore.cc/v1`
+* **认证方式**: 在 HTTP Headers 中加入 Bearer Token:
+  `Authorization: Bearer YOUR_SUPASTORE_API_KEY`
+
+---
+
+## 💻 基础测试：cURL 请求示例
+
+在使用客户端配置前，您可以在终端中运行以下 cURL 命令以验证您的 API 密钥和接口通信：
+
+```bash
+curl https://supastore.cc/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_SUPASTORE_API_KEY" \
+  -d '{
+    "model": "claude-3-5-sonnet-latest",
+    "messages": [
+      {"role": "user", "content": "你好，请确认你的模型名称并说一句打招呼的话。"}
+    ],
+    "temperature": 0.7
+  }'
+```
+
+若接口返回正常的 JSON 格式响应（类似下面所示），说明网络连接与密钥鉴权均完全正常：
+
+```json
+{
+  "id": "chatcmpl-xxxxx",
+  "object": "chat.completion",
+  "created": 1716666666,
+  "model": "claude-3-5-sonnet-latest",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "你好！我是 Claude 3.5 Sonnet。很高兴通过 SupaStore 与您建立连接！"
+      },
+      "finish_reason": "stop"
+    }
+  ]
+}
+```
+
+> [!WARNING]
+> 请注意保护好您的 API Key。一旦在前端公开或提交到公共 GitHub 仓库，可能会导致额度被恶意盗用。
+
+---
+
+*最后更新：2026-05-25*

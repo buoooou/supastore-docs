@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* Pure White bg */
+    --foreground: 224 71.4% 4.1%; /* Slate text */
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 243 75% 59%; /* Beautiful Indigo */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 262.1 83.3% 57.8%; /* Purple accent */
+    --secondary-foreground: 0 0% 100%;
+    --tertiary: 210 40% 96.1%;
+    --tertiary-foreground: 224 71.4% 4.1%;
+    --quaternary: 142.1 76.2% 36.3%;
+    --quaternary-foreground: 0 0% 100%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 243 75% 59%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%; /* Subtly defined border color */
+    --input: 214.3 31.8% 91.4%;
+    --ring: 243 75% 59%;
+    --radius: 0.75rem;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-heading: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    
+    /* Pop Shadows replaced with clean shadow parameters */
+    --shadow-pop: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    --shadow-pop-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    --shadow-pop-active: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    --shadow-pop-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 40% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 243 75% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 262.1 83.3% 57.8%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 243 75% 59%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 243 75% 59%;
+    
+    --shadow-pop: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    --shadow-pop-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    position: relative;
+  }
+
+  .small-caps {
+    @apply font-mono text-xs font-medium uppercase tracking-[0.15em] text-accent;
+  }
+}
+
+@layer utilities {
+  .candy-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3.5 font-heading font-semibold text-primary-foreground transition-all duration-200 shadow-sm hover:bg-primary/95 hover:scale-[1.01] active:scale-[0.99];
+  }
+
+  .sticker-card {
+    @apply rounded-xl border border-border bg-card p-8 transition-all duration-200 shadow-sm hover:shadow-md hover:border-border/80;
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .blob-radius {
+    border-radius: 24px;
+  }
+}
+
+
+@media (max-width: 1150px) {
+  .frame {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1 1 auto;
+  }
+
+  .frame__tags {
+    margin-top: auto;
+  }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* canvas-wrapper 确保在 section 下面 */
+.canvas-wrapper {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* 避免出现滚动条 */
+  z-index: 0;
+  /* 确保它在 section 之下 */
+}
+
+/* 如果需要，设置 canvas 的样式以保持较大的初始状态 */
+.canvas-wrapper canvas {
+  width: 100vw;
+  /* 或适当的值 */
+  height: 100vh;
+  /* 或适当的值 */
+  display: block;
+  /* 避免 canvas 元素有多余的间距 */
+}
+
+/* section 确保在 canvas-wrapper 之上 */
+section {
+  position: relative;
+  /* 使 z-index 生效 */
+  z-index: 1;
+  /* 确保在 canvas-wrapper 之上 */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

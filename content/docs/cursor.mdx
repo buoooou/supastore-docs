@@ -1,0 +1,68 @@
+---
+title: Cursor 编辑器接入
+description: 详细指导如何在 Cursor 编辑器中配置 SupaStore，实现极速、高性价比的代码编写与补全。
+date: "2026-05-25"
+---
+
+[Cursor](https://cursor.com/) 是目前最流行的 AI 驱动代码编辑器。通过接入 SupaStore，您可以自定义调用包含 `claude-3-5-sonnet-latest` 在内的顶级模型，免去昂贵的官方订阅，同时享受与官方完全一致的响应速度。
+
+---
+
+## ⚙️ 接入配置步骤
+
+按照以下步骤，在 Cursor 中配置自定义 API：
+
+<Steps>
+
+<Step>第一步：打开 Settings</Step>
+
+1. 启动 Cursor 编辑器。
+2. 点击右上角的 **齿轮按钮 (Cursor Settings)**，或者在 Windows/Linux 上使用快捷键 `Ctrl + Shift + Y`，macOS 上使用 `Cmd + ,` 键。
+3. 在弹出的设置侧边栏中，点击左侧菜单的 **Models**。
+
+<Step>第二步：配置 OpenAI Base URL & API Key</Step>
+
+1. 在 Models 设置页面中，找到 **OpenAI API Key** 选项卡（SupaStore 兼容 OpenAI 协议，因此我们直接在此配置）。
+2. 将 **OpenAI API Key** 输入框设置为您在 SupaStore 申请的密钥：`sk-xxxxxxxxxxxx`。
+3. 点击 **Override OpenAI Base URL** 展开自定义请求地址配置。
+4. 输入 SupaStore 中继地址：
+   ```bash
+   https://supastore.cc/v1
+   ```
+5. 点击 **Save**（或者输入框旁的确认按钮）以应用配置。
+
+<Step>第三步：管理与开启所需的 AI 模型</Step>
+
+1. 在 **Models** 列表下方，您会看到目前启用的模型开关。
+2. **启用核心模型**：确保 `claude-3-5-sonnet` 和 `gpt-4o` 处于开启状态。
+3. **添加自定义模型**：如果您需要使用其他模型（例如 `deepseek-chat` 或 `o3-mini`），点击 **+ Add model**，输入对应的 API 标识符（如 `deepseek-chat` 或 `deepseek-reasoner`），然后点击添加。
+4. 将下方 **Using Cursor Subscription** 开关关闭（确保系统完全走您的自定义 Key 和账户额度）。
+
+</Steps>
+
+---
+
+## 💡 验证配置是否生效
+
+配置完成后，您可以直接在编辑器中进行测试：
+
+1. 打开任意项目代码文件。
+2. 按 `Cmd + K` (macOS) 或 `Ctrl + K` (Windows) 唤起行内生成对话框。
+3. 输入任意测试需求（如：*“使用 Python 写一个冒泡排序”*），并选择模型为 `claude-3-5-sonnet`。
+4. 点击回车，若代码顺利流式生成，且没有报错，代表配置已完全生效！
+5. 您可以前往 **[SupaStore 控制台](https://supastore.cc)** 刷新查看调用日志，确认余额扣除与扣费额度是否符合计费标准。
+
+---
+
+## 🔧 常见问题与排障
+
+### 提示 "Invalid API Key" 或 "Authentication Failed"
+- 请确认您的 SupaStore 密钥没有复制多余的空格，且开头为 `sk-`。
+- 确认您的 **[钱包余额](https://supastore.cc/console/topup)** 是否充足，如果钱包额度为 0，请求会被拒绝。
+
+### Override Base URL 输入框报错或无法保存
+- 确保地址为 `https://supastore.cc/v1`。有些版本的 Cursor 如果在末尾多加了斜杠 `/` 或缺少了 `/v1` 可能会导致请求失败。请严格保持与本教程一致。
+
+---
+
+*最后更新：2026-05-25*

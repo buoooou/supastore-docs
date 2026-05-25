@@ -1,0 +1,57 @@
+---
+title: 快速开始 (Quick Start)
+description: 欢迎使用 SupaStore 中转站，三步即可将最先进的 AI 大模型接入您的开发工作流。
+date: "2026-05-25"
+---
+
+欢迎使用 **SupaStore**！SupaStore 提供高性能、多区域容灾、低延迟的全球大模型 API 中转代理服务，100% 对齐官方接口协议，兼容 OpenAI 格式。
+
+无论您是在使用 Cursor, Claude Code 等编程工具，还是在使用 LobeChat 等网页端交互工具，只需三步，即可无缝切换并开始使用。
+
+---
+
+## 🚀 接入三步曲
+
+<Steps>
+
+<Step>第一步：获取 API Key</Step>
+
+1. 访问并注册 **[SupaStore 控制台](https://supastore.cc)** 账号。
+2. 登录后，前往左侧菜单的 **API Keys**。
+3. 点击 **创建新密钥 (Create API Key)**，生成属于您的密钥。请妥善保存该密钥，其格式为 `sk-................`。
+4. 前往 **[充值钱包](https://supastore.cc/console/topup)** 进行额度充值（支持多种便捷支付方式）。
+
+<Step>第二步：统一 API 接口地址 (Base URL)</Step>
+
+所有大模型的接口请求均通过统一的中继地址进行转发。在您的客户端或代码中，将默认的官方地址替换为：
+
+```bash
+https://supastore.cc/v1
+```
+
+> [!NOTE]
+> 如果您使用的工具要求输入 `/v1/chat/completions`，则 Base URL 请填写为 `https://supastore.cc`。大部分工具（如 Cursor/Cline）只需填写到 `/v1` 即可。
+
+<Step>第三步：配置客户端或代码</Step>
+
+选择您正在使用的场景，查看对应的专属接入指南：
+
+- **AI 编程编辑器**：参考 [Cursor 接入指引](/docs/cursor) 或 [Cline / Roo Code 插件接入](/docs/cline-roo-code)。
+- **命令行辅助工具**：参考 Anthropic 官方的 [Claude Code 接入指引](/docs/claude-code)。
+- **通用对话客户端**：参考 [Web UI (NextChat / LobeChat) 接入](/docs/web-ui)。
+- **代码库/SDK 集成**：参考 [SDK 接入示例](/docs/sdk-integration)。
+
+</Steps>
+
+---
+
+## ⚡ 为什么选择 SupaStore？
+
+* **多地容灾与高并发**：具备智能路由和负载均衡机制，提供高达 99.999% 的运行确定性。
+* **100% 官方直连**：不缓存用户提示词与生成内容，端到端加密，确保敏感代码与业务隐私的绝对安全。
+* **极速延迟响应**：优化全球中转链路，秒级首字响应，配合极致的流式传输（Streaming）。
+* **对齐官方计费率**：1:1 锚定官方费率，额度消耗透明，后台提供详细的调用日志与钱包明细。
+
+---
+
+*最后更新：2026-05-25*

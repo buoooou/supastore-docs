@@ -1,0 +1,83 @@
+---
+title: VS Code Cline / Roo Code 接入
+description: 详细指导如何在 VS Code 热门 Agent 插件 Cline 与 Roo Code 中配置 SupaStore，开启高性价比的智能体自主编程。
+date: "2026-05-25"
+---
+
+**[Cline](https://github.com/cline/cline)**（原名 Prevail）和 **[Roo Code](https://github.com/RooVetGit/Roo-Code)**（原名 Roo Cline）是 VS Code 中非常强大的交互式 AI 智能体（Agentic Coding）插件。它们能够读取您的项目结构、修改代码、执行终端命令并自我修正。
+
+通过 SupaStore，您可以选用包括 `claude-3-5-sonnet-latest`、`deepseek-reasoner` (R1) 等在内的顶级大模型作为它们的逻辑大脑。
+
+---
+
+## ⚙️ Cline 插件配置步骤
+
+<Steps>
+
+<Step>第一步：安装插件</Step>
+
+在 VS Code 的 Extensions 商店中搜索并安装 **Cline** 插件。安装成功后，VS Code 左侧活动栏会新增一个 Cline 机器人的图标。
+
+<Step>第二步：打开 Settings</Step>
+
+1. 点击左侧活动栏的 Cline 图标打开插件窗口。
+2. 点击右上角的 **齿轮按钮 (Settings)**。
+
+<Step>第三步：填入 API 配置</Step>
+
+1. 在 **API Provider** 下拉菜单中，选择 **OpenAI Compatible**。
+2. **Base URL**：输入 SupaStore 的中继地址：
+   ```bash
+   https://supastore.cc/v1
+   ```
+3. **API Key**：填入您的 SupaStore 密钥，例如 `sk-xxxxxxxxxxxxxxxxxxxxxxxx`。
+4. **Model ID**：输入您希望调用的模型。通常建议输入以下两个核心模型之一：
+   * `claude-3-5-sonnet-latest` (目前效果最棒的编程模型)
+   * `deepseek-reasoner` (更省 Token、具有推理思考链路的 R1 模型)
+
+<Step>第四步：确认配置</Step>
+
+点击配置页面底部的 **Done** 保存设置。此时，在 Cline 的对话框中输入问题，即可开始体验自主式智能体编程。
+
+</Steps>
+
+---
+
+## ⚙️ Roo Code (Roo Cline) 插件配置步骤
+
+Roo Code 作为 Cline 的分支版本，提供了对系统提示词、温度和自定义模型参数的更精细控制：
+
+<Steps>
+
+<Step>第一步：安装插件</Step>
+
+在 VS Code 商店中搜索并安装 **Roo Code** 插件。
+
+<Step>第二步：打开设置</Step>
+
+点击 Roo Code 侧边栏面板，在顶部找到并点击齿轮图标。
+
+<Step>第三步：添加配置项</Step>
+
+1. **Provider**：选择 **OpenAI Compatible**。
+2. **Base URL**：输入 `https://supastore.cc/v1`。
+3. **API Key**：填入您的 SupaStore `sk-` 密钥。
+4. **Model**：在输入框中直接输入 `claude-3-5-sonnet-latest` 或自定义的 `deepseek-chat`。
+5. **Context Window (Optional)**：建议根据模型大小设置上下文窗口。如 `claude-3-5-sonnet-latest` 可设为 `200000` (200K)。
+6. **Save Settings** 保存并关闭。
+
+</Steps>
+
+---
+
+## 💡 Agentic 模式最佳实践
+
+像 Cline 和 Roo Code 这样的智能体运行起来消耗的 Token 远比一般的 Chat 聊天要大得多。请遵循以下最佳实践来控制您的额度支出：
+
+* **善用 `.clineignore`**：在项目根目录下创建一个 `.clineignore` 文件，将无用的二进制文件、缓存目录、大日志文件以及 `node_modules` 写入其中。这可以避免智能体在分析项目时读取大文件，从而节省 90% 以上的上下文 Token。
+* **限制并发与最大迭代步数**：在配置中限制 Cline 自动执行的最大步数（建议设置为 15-20 步），防止其进入无线循环排障状态消耗额度。
+* **搭配使用 DeepSeek R1**：对于极其复杂的底层逻辑或数理推导问题，可以切换为 `deepseek-reasoner`，它的推理能力极强，且 Token 价格相比 Claude 更加实惠。
+
+---
+
+*最后更新：2026-05-25*

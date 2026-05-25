@@ -1,0 +1,10 @@
+[phases.setup]
+nixPkgs = ["nodejs_20", "pnpm"]
+
+[phases.install]
+cmds = ["pnpm install --no-frozen-lockfile"]
+
+[variables]
+NIXPACKS_PATH = "/app/node_modules/.bin"
+NODE_ENV = "production"
+NIXPACKS_NO_VENV = "1"

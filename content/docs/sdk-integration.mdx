@@ -1,0 +1,126 @@
+---
+title: SDK 接入与开发指南
+description: 使用 Python, Node.js 以及常用语言的标准 SDK 接入 SupaStore。
+date: "2026-05-25"
+---
+
+SupaStore 支持标准的 **OpenAI 兼容协议**。开发人员无需编写复杂的原始 HTTP 请求代码，直接配置并调用各主流编程语言的官方 `openai` 依赖库即可开始工作。
+
+---
+
+## 🐍 Python SDK 接入
+
+在 Python 项目中，首先通过 pip 安装官方的 openai SDK：
+
+```bash
+pip install openai
+```
+
+然后在您的代码中初始化 `OpenAI` 客户端，并将 `base_url` 指向 SupaStore 的中继服务：
+
+```python
+import os
+from openai import OpenAI
+
+# 初始化客户端
+# 将 base_url 修改为 https://supastore.cc/v1
+client = OpenAI(
+    api_key="YOUR_SUPASTORE_API_KEY",  # 或从环境变量读取 os.environ.get("SUPASTORE_API_KEY")
+    base_url="https://supastore.cc/v1"
+)
+
+# 发起 Chat Completions 请求
+try:
+    response = client.chat.completions.create(
+        model="claude-3-5-sonnet-latest",
+        messages=[
+            {"role": "system", "content": "你是一位优秀的编程导师。"},
+            {"role": "user", "content": "请用一段简明的话解释什么是 Agentic Workflow？"}
+        ],
+        temperature=0.5,
+        max_tokens=1000,
+        stream=True  # 开启流式响应 (Streaming)
+    )
+
+    # 循环输出流式内容
+    for chunk in response:
+        content = chunk.choices[0].delta.content
+        if content:
+            print(content, end="", flush=True)
+
+except Exception as e:
+    print(f"\n请求发生错误: {e}")
+```
+
+---
+
+## 🟢 Node.js SDK 接入
+
+在 Node.js 或 TypeScript 项目中，安装官方的 `openai` 依赖包：
+
+```bash
+npm install openai
+# 或者使用 pnpm
+pnpm add openai
+```
+
+配置 `base_url` 进行请求调用：
+
+```javascript
+import OpenAI from "openai";
+
+// 初始化 client 并指定自定义 base_url
+const openai = new OpenAI({
+  apiKey: "YOUR_SUPASTORE_API_KEY",
+  baseURL: "https://supastore.cc/v1"
+});
+
+async function main() {
+  try {
+    const stream = await openai.chat.completions.create({
+      model: "claude-3-5-sonnet-latest",
+      messages: [
+        { role: "system", content: "你是一个热心的智能助理。" },
+        { role: "user", content: "请用中文写一首赞美写代码程序员的小诗。" }
+      ],
+      stream: true,
+    });
+
+    for await (const chunk of stream) {
+      process.stdout.write(chunk.choices[0]?.delta?.content || "");
+    }
+    console.log("\n");
+  } catch (error) {
+    console.error("请求失败：", error);
+  }
+}
+
+main();
+```
+
+---
+
+## 🌐 环境变量配置 (Env Var)
+
+为了安全起见，通常不建议直接将 API Key 硬编码写入代码中。最佳实践是将其写入运行环境的全局变量或项目的 `.env` 配置文件中。
+
+大部分官方 SDK 以及开源软件在检测到以下两个标准环境变量时，会自动加载并应用，省去了在代码中显式指定 base_url 的繁琐：
+
+```bash
+# 配置 API 代理接口
+export OPENAI_BASE_URL="https://supastore.cc/v1"
+
+# 配置 API 密钥
+export OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxxxxxxxxxx"
+```
+
+配置完成后，您在代码中只需通过最简代码 `client = OpenAI()` 即可无感接入：
+
+```python
+from openai import OpenAI
+client = OpenAI() # 自动应用上述两个环境变量
+```
+
+---
+
+*最后更新：2026-05-25*
