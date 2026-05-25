@@ -2,6 +2,7 @@
 title: API 概述
 description: SupaStore API 接入地址、鉴权鉴向与基本调试说明。
 date: "2026-05-25"
+updated: "2026-05-25"
 ---
 
 SupaStore 提供标准的 RESTful API 接口，全面兼容主流 AI 模型。通过统一的 API 格式和 Base URL，您可以零门槛地将最新 AGI 能力接入您的智能应用、编辑器插件或自研开发流中。
@@ -13,11 +14,11 @@ SupaStore 提供标准的 RESTful API 接口，全面兼容主流 AI 模型。�
 SupaStore 为开发者提供专用的高可用 API 网关端点：
 
 ```http
-https://supastore.cc/v1
+https://api.supastore.cc/v1
 ```
 
 > [!NOTE]
-> 如果您是在 Cursor、Cline、LobeChat 等客户端中进行配置，请在 **Base URL / API 地址** 栏填写 `https://supastore.cc/v1` 或 `https://supastore.cc`（部分客户端会自动追加 `/v1`，建议根据提示配置）。
+> 如果您是在 Cursor、Cline、LobeChat 等客户端中进行配置，请在 **Base URL / API 地址** 栏填写 `https://api.supastore.cc/v1` 或 `https://api.supastore.cc`（部分客户端会自动追加 `/v1`，建议根据提示配置）。
 
 ---
 
@@ -41,3 +42,78 @@ Authorization: Bearer YOUR_SUPASTORE_API_KEY
 我们为您提供了在线测试和调试接口：
 * 您可以访问 [Apifox 操练场](https://apifox.newapi.ai/) 在线测试和调试所有接口。
 * 各接口的详细调用参数与响应结构请查阅侧边栏的专属接口文档。
+
+---
+
+## ⚡ 最小可用请求
+
+如果您只想确认 API Key 是否可用，可以直接运行下面的 cURL：
+
+```bash
+curl "https://api.supastore.cc/v1/chat/completions" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_SUPASTORE_API_KEY" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {"role": "user", "content": "请回复 pong"}
+    ]
+  }'
+```
+
+Node.js 示例：
+
+```javascript
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.SUPASTORE_API_KEY,
+  baseURL: "https://api.supastore.cc/v1"
+});
+
+const completion = await client.chat.completions.create({
+  model: "gpt-4o-mini",
+  messages: [{ role: "user", content: "请回复 pong" }]
+});
+
+console.log(completion.choices[0]?.message?.content);
+```
+
+Python 示例：
+
+```python
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ["SUPASTORE_API_KEY"],
+    base_url="https://api.supastore.cc/v1",
+)
+
+completion = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "请回复 pong"}],
+)
+
+print(completion.choices[0].message.content)
+```
+
+---
+
+## 常见错误码
+
+| HTTP 状态码 | 常见原因 | 处理建议 |
+| :--- | :--- | :--- |
+| `400` | 请求体格式错误、参数缺失、模型 ID 不存在 | 检查 JSON、`model`、`messages` 等必填字段。 |
+| `401` | API Key 缺失或错误 | 确认 Header 为 `Authorization: Bearer YOUR_SUPASTORE_API_KEY`。 |
+| `402` | 账户余额不足 | 前往 [充值中心](https://supastore.cc/console/topup) 补充额度。 |
+| `429` | 请求过于频繁或超过并发限制 | 降低客户端并发、增加重试退避，或升级套餐。 |
+| `500` | 网关或上游模型临时异常 | 稍后重试；生产服务建议配置指数退避与备用模型。 |
+
+---
+
+## 下一步
+
+- 查看 [模型与价格](/model-pricing)，选择适合当前任务的模型与套餐。
+- 查看 [聊天对话接口](/api-chat)，了解最常用的 Chat Completions 请求格式。
+- 查看 [SDK 接入指南](/sdk-integration)，在 Node.js、Python 或环境变量中配置 SupaStore。

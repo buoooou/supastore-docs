@@ -1,13 +1,13 @@
-# Supaboard
+# SupaStore Docs
 
-Supaboard is a Next.js application for AI email workflows. It combines inbound and outbound agent mail handling, shared inbox automation, and recruitment analysis built on IMAP, Postgres, Drizzle, and local or self-hosted LLM tooling.
+SupaStore Docs is a Next.js documentation site for a high-availability AI API gateway. It explains OpenAI-compatible API access, model routing, SDK integration, and setup guides for Cursor, Claude Code, Cline, Roo Code, and web UI clients.
 
 ## Core capabilities
 
-- AI mail agents with thread-aware inbound and outbound handling
-- External mailbox ingestion for recruitment and workflow analysis
-- Talent and job extraction with pgvector-backed similarity search
-- Auth, billing, storage, and admin dashboard flows
+- MDX-based product and API documentation
+- OpenAI-compatible endpoint examples for common SDKs
+- Tool setup guides for AI coding agents and chat clients
+- SEO metadata, sitemap, robots.txt, and llms.txt support
 
 ## Local development
 
@@ -19,5 +19,4 @@ Supaboard is a Next.js application for AI email workflows. It combines inbound a
 ## Useful scripts
 
 - `pnpm lint`
-- `pnpm exec tsc -p tsconfig.json --noEmit --incremental false`
-- `pnpm db:migrate`
+- `pnpm build`

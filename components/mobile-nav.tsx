@@ -19,7 +19,7 @@ interface MobileNavProps {
   sidebarNav?: SidebarNavItem[]
 }
 
-export function MobileNav({ }: MobileNavProps) {
+export function MobileNav(_props: MobileNavProps) {
   const [open, setOpen] = React.useState(false)
 
   return (

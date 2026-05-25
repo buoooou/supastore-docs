@@ -2,6 +2,7 @@
 title: API 兼容性与模型
 description: SupaStore 支持的模型系列、计费费率说明与最基础的 API 请求测试。
 date: "2026-05-25"
+updated: "2026-05-25"
 ---
 
 SupaStore 提供完全兼容 **OpenAI REST API** 的接口规范。您可以直接使用主流编程语言的官方 `openai` 库来发起请求，或者通过任何支持自定义 API 地址（Base URL）的第三方软件来接入。
@@ -11,6 +12,9 @@ SupaStore 提供完全兼容 **OpenAI REST API** 的接口规范。您可以直�
 ## 🌟 支持的模型列表
 
 我们聚合了全球最顶尖的闭源与开源模型，提供一站式接入：
+
+> [!TIP]
+> 如果您正在做模型选型、预算评估或并发规划，请优先查看 [模型与价格](/model-pricing)。
 
 | 模型厂商 | 模型 ID (API Model String) | 计费倍率 (对比官方) | 适用场景与优势 |
 | :--- | :--- | :--- | :--- |
@@ -29,7 +33,7 @@ SupaStore 提供完全兼容 **OpenAI REST API** 的接口规范。您可以直�
 
 ## 🛠️ 请求地址与格式
 
-* **API Base URL**: `https://supastore.cc/v1`
+* **API Base URL**: `https://api.supastore.cc/v1`
 * **认证方式**: 在 HTTP Headers 中加入 Bearer Token:
   `Authorization: Bearer YOUR_SUPASTORE_API_KEY`
 
@@ -40,7 +44,7 @@ SupaStore 提供完全兼容 **OpenAI REST API** 的接口规范。您可以直�
 在使用客户端配置前，您可以在终端中运行以下 cURL 命令以验证您的 API 密钥和接口通信：
 
 ```bash
-curl https://supastore.cc/v1/chat/completions \
+curl https://api.supastore.cc/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_SUPASTORE_API_KEY" \
   -d '{

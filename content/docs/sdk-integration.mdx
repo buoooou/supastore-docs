@@ -23,10 +23,10 @@ import os
 from openai import OpenAI
 
 # 初始化客户端
-# 将 base_url 修改为 https://supastore.cc/v1
+# 将 base_url 修改为 https://api.supastore.cc/v1
 client = OpenAI(
     api_key="YOUR_SUPASTORE_API_KEY",  # 或从环境变量读取 os.environ.get("SUPASTORE_API_KEY")
-    base_url="https://supastore.cc/v1"
+    base_url="https://api.supastore.cc/v1"
 )
 
 # 发起 Chat Completions 请求
@@ -72,7 +72,7 @@ import OpenAI from "openai";
 // 初始化 client 并指定自定义 base_url
 const openai = new OpenAI({
   apiKey: "YOUR_SUPASTORE_API_KEY",
-  baseURL: "https://supastore.cc/v1"
+  baseURL: "https://api.supastore.cc/v1"
 });
 
 async function main() {
@@ -108,7 +108,7 @@ main();
 
 ```bash
 # 配置 API 代理接口
-export OPENAI_BASE_URL="https://supastore.cc/v1"
+export OPENAI_BASE_URL="https://api.supastore.cc/v1"
 
 # 配置 API 密钥
 export OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxxxxxxxxxx"

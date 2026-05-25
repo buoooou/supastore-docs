@@ -157,6 +157,7 @@ const docs = defineCollection({
     title: z.string(),
     description: z.string().optional(),
     date: z.coerce.date().optional(),
+    updated: z.coerce.date().optional(),
     published: z.boolean().optional().default(true),
     links: linksSchema,
     featured: z.boolean().optional().default(false),

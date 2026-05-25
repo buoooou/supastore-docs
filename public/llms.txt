@@ -7,6 +7,8 @@
 - [文档首页](https://docs.supastore.cc/): 开始配置大模型中转 API 接口。
 - [客户端下载](https://docs.supastore.cc/download): 下载推荐的多模型聚合桌面端与对话 UI 客户端。
 - [API 兼容性与模型列表](https://docs.supastore.cc/api-compatibility): 了解目前支持的模型版本以及 OpenAI 兼容层细节。
+- [模型与价格](https://docs.supastore.cc/model-pricing): 查看模型选型建议、套餐并发、扣费规则与常见成本问题。
+- [常见问题与排障](https://docs.supastore.cc/troubleshooting): 排查 Base URL、401、402、429、模型 ID、流式响应与客户端配置问题。
 - [Cursor 配置教程](https://docs.supastore.cc/cursor): 如何在 Cursor 编辑器中无缝使用 SupaStore API。
 - [Claude Code 配置教程](https://docs.supastore.cc/claude-code): 在本地终端集成 Anthropic 官方命令行工具的方案。
 - [邀请返佣](https://docs.supastore.cc/affiliate): 推荐他人使用 SupaStore，赚取 15% 提成。
@@ -15,8 +17,9 @@
 
 - 核心服务: 聚合大模型 API 中转 (支持 GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, DeepSeek 等)
 - 接口地址: https://supastore.cc/v1
+- 鉴权方式: Authorization: Bearer YOUR_SUPASTORE_API_KEY
 - 适用场景: AI 编程助理 (Cursor, VS Code Plugin), 多模型聊天界面, 企业级 API 整合
-- 账户管理: 提供充值中心、实时的额度使用情况及多 Key 管理。
+- 账户管理: 提供充值中心、实时额度使用情况、多 Key 管理与套餐并发配置。
 
 ## Contact
 

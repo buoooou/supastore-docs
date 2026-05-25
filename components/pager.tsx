@@ -52,7 +52,13 @@ export function DocsPager({ doc }: DocsPagerProps) {
 }
 
 export function getPagerForDoc(doc: DocLike) {
-  const flattenedLinks = [null, ...flatten(docsConfig.sidebarNav), null]
+  const flattenedLinks = [
+    null,
+    ...flatten(docsConfig.guidesSidebar),
+    ...flatten(docsConfig.apiSidebar),
+    ...flatten(docsConfig.policiesSidebar),
+    null,
+  ]
   const activeIndex = flattenedLinks.findIndex(
     (link) => doc.slug === link?.href
   )

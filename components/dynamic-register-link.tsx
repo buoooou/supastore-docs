@@ -10,6 +10,7 @@ interface DynamicRegisterLinkProps extends React.ComponentProps<typeof Link> {
 
 let activeDomainPromise: Promise<string | null> | null = null;
 let resolvedActiveDomain: string | null = null;
+const ACTIVE_DOMAIN_CACHE_KEY = "supastore_active_domain_info";
 
 // Helper to check connectivity of a single domain via no-cors fetch
 async function checkDomain(domain: string): Promise<string> {
@@ -72,13 +73,15 @@ async function triggerBackgroundCheck(domains: string[]): Promise<string | null>
     resolvedActiveDomain = result;
     try {
       localStorage.setItem(
-        "supaboard_active_domain_info",
+        ACTIVE_DOMAIN_CACHE_KEY,
         JSON.stringify({
           domain: result,
           timestamp: Date.now(),
         })
       );
-    } catch (e) {}
+    } catch {
+      // localStorage can be unavailable in restricted browser contexts.
+    }
   }
   return result;
 }
@@ -89,7 +92,7 @@ function initDomainCheck(domains: string[]): Promise<string | null> {
   if (activeDomainPromise) return activeDomainPromise;
 
   try {
-    const cached = localStorage.getItem("supaboard_active_domain_info");
+    const cached = localStorage.getItem(ACTIVE_DOMAIN_CACHE_KEY);
     if (cached) {
       const { domain, timestamp } = JSON.parse(cached);
       // Cache valid for 10 minutes
@@ -100,7 +103,9 @@ function initDomainCheck(domains: string[]): Promise<string | null> {
         return Promise.resolve(domain);
       }
     }
-  } catch (e) {}
+  } catch {
+    // Ignore malformed or unavailable cached domain data.
+  }
 
   activeDomainPromise = triggerBackgroundCheck(domains);
   return activeDomainPromise;

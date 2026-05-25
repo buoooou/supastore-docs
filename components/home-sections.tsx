@@ -102,8 +102,8 @@ export function FeaturesGrid() {
       delay: 0.1
     },
     {
-      title: "流媒体全解锁",
-      desc: "完美支持 Netflix, Disney+, YouTube Premium 等服务，随时畅享 4K 高清视频。",
+      title: "多模型统一接入",
+      desc: "统一接入 OpenAI、Claude、Gemini、DeepSeek 等模型，减少多平台账号与账单管理成本。",
       icon: Star,
       color: "bg-indigo-50 text-indigo-600",
       delay: 0.15
@@ -364,10 +364,10 @@ export function TGBotAnimation() {
         </p>
         <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
           <Link
-            href="https://t.me/supaboard_vpn_bot"
+            href={siteConfig.telegramBot}
             className="bg-primary text-white px-6 py-3.5 rounded-xl font-heading font-semibold text-sm flex items-center gap-2 hover:bg-primary/95 transition-all shadow-sm active:scale-[0.99] border border-primary"
           >
-            立即使用 @supaboard_vpn_bot
+            立即使用 Telegram 助手
           </Link>
         </div>
       </div>

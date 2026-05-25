@@ -47,14 +47,15 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
   keywords: [
-    "机场",
-    "翻墙",
-    "VPN",
-    "网络加速",
-    "IPLC",
-    "IEPL",
-    "ChatGPT 解锁",
-    "Netflix 解锁",
+    "AI API 中转",
+    "大模型 API",
+    "OpenAI Compatible API",
+    "Claude Code API",
+    "Cursor API 配置",
+    "Cline API 配置",
+    "多模型聚合",
+    "LLM Gateway",
+    "SupaStore",
   ],
   authors: [
     {

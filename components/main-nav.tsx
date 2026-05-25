@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { MainNavItem } from "types/nav"
 
+import { docsConfig } from "@/config/docs"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
@@ -16,9 +17,12 @@ interface MainNavProps {
 
 export function MainNav({ items, children }: MainNavProps) {
   const pathname = usePathname()
+  const apiPaths = docsConfig.apiSidebar.flatMap((group) =>
+    group.items.map((item) => item.href).filter(Boolean)
+  )
 
   const isPoliciesActive = ["/terms", "/privacy", "/refund", "/aup", "/dmca", "/license"].includes(pathname || "")
-  const isApiActive = (pathname || "").startsWith("/api-") || pathname === "/api"
+  const isApiActive = apiPaths.includes(pathname || "") || pathname === "/api"
   const isGuidesActive = !isPoliciesActive && !isApiActive
 
   const getActiveState = (href: string) => {

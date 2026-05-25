@@ -1,7 +1,7 @@
 {
-  "name": "Supaboard",
-  "short_name": "Supaboard",
-  "description": "Supaboard 提供稳定、高速的全球网络加速服务",
+  "name": "SupaStore Docs",
+  "short_name": "SupaStore",
+  "description": "SupaStore 提供高可用的大模型 API 中转服务，兼容 OpenAI 标准接口。",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -15,6 +15,6 @@
     }
   ],
   "theme_color": "#6f3cff",
-  "background_color": "#FFFDF5",
+  "background_color": "#ffffff",
   "display": "standalone"
 }

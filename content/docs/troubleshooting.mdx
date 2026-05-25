@@ -1,0 +1,143 @@
+---
+title: 常见问题与排障
+description: 快速定位 SupaStore API 接入过程中的 Base URL、鉴权、余额、限流与客户端配置问题。
+date: "2026-05-25"
+updated: "2026-05-25"
+---
+
+如果客户端无法连接 SupaStore，通常可以从 **Base URL、API Key、余额、模型 ID、并发限制** 这五个位置开始排查。
+
+---
+
+## 快速自检
+
+| 检查项 | 正确配置 |
+| :--- | :--- |
+| Base URL | `https://api.supastore.cc/v1` |
+| 兼容 OpenAI 的客户端 | 选择 `OpenAI Compatible` 或 `OpenAI` |
+| API Key | 使用 SupaStore 控制台生成的 `sk-...` 密钥 |
+| 鉴权 Header | `Authorization: Bearer YOUR_SUPASTORE_API_KEY` |
+| 测试模型 | `gpt-4o-mini` 或 `/v1/models` 返回的任意模型 ID |
+
+> [!TIP]
+> 部分客户端会自动追加 `/v1`。如果填写 `https://api.supastore.cc/v1` 后报错，可尝试改成 `https://api.supastore.cc`。
+
+---
+
+## 先用 cURL 验证密钥
+
+在排查 Cursor、Claude Code、Cline、LobeChat 之前，建议先用终端确认 API Key 和网关是否可用：
+
+```bash
+curl "https://api.supastore.cc/v1/chat/completions" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_SUPASTORE_API_KEY" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {"role": "user", "content": "请回复 pong"}
+    ]
+  }'
+```
+
+如果 cURL 正常，但客户端失败，问题通常在客户端的 Base URL、模型名称或代理设置。
+
+---
+
+## 401: Invalid API Key / Authentication Failed
+
+常见原因：
+
+- API Key 复制不完整，漏掉 `sk-` 前缀或尾部字符。
+- Header 没有使用 `Bearer` 格式。
+- 把其他平台的 API Key 填进了 SupaStore Base URL。
+- API Key 已在控制台撤销或重置。
+
+处理建议：
+
+1. 在 [SupaStore 控制台](https://supastore.cc/console) 重新创建一个 API Key。
+2. 用 cURL 测试新密钥。
+3. 客户端里删除旧配置后重新粘贴，避免隐藏字符或缓存。
+
+---
+
+## 402: 余额不足
+
+当账户余额不足时，请求可能会被拒绝或在长任务中断。
+
+处理建议：
+
+- 前往 [充值中心](https://supastore.cc/console/topup) 补充余额。
+- 使用 [模型与价格](/model-pricing) 页面选择更低成本模型。
+- 为 Cursor、Claude Code、Cline 分别创建 API Key，便于观察具体消耗来源。
+
+---
+
+## 429: 请求过快或并发过高
+
+Agent 工具会自动发起多轮请求，尤其是在读取代码库、生成补丁或执行长任务时，容易触发并发限制。
+
+处理建议：
+
+- 降低客户端并发或同时运行的 Agent 数量。
+- 缩短上下文，减少一次任务中携带的文件数量。
+- 在自研服务中加入指数退避重试。
+- 升级到更高并发套餐，或联系支持配置团队额度。
+
+---
+
+## 400: 模型 ID 或请求参数错误
+
+常见原因：
+
+- `messages` 为空，或不是数组。
+- JSON 格式错误，例如末尾多了逗号。
+- `model` 写成了客户端展示名，而不是 API Model ID。
+- 客户端把完整接口路径误填进 Base URL。
+
+处理建议：
+
+1. 调用 `/v1/models` 获取当前账户可用模型：
+
+```bash
+curl "https://api.supastore.cc/v1/models" \
+  -H "Authorization: Bearer YOUR_SUPASTORE_API_KEY"
+```
+
+2. 使用返回结果中的 `id` 作为 `model`。
+3. Base URL 只填写到 `https://api.supastore.cc/v1` 或 `https://api.supastore.cc`，不要填写 `/chat/completions`。
+
+---
+
+## 流式响应没有逐字输出
+
+常见原因：
+
+- 请求体没有设置 `"stream": true`。
+- 客户端 UI 自己缓冲了响应。
+- 中间层代理关闭了 SSE 或把响应整体缓存后再返回。
+
+可以用下面的 cURL 测试网关是否正常返回流式数据：
+
+```bash
+curl -N "https://api.supastore.cc/v1/chat/completions" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_SUPASTORE_API_KEY" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {"role": "user", "content": "请逐条列出 3 个要点。"}
+    ],
+    "stream": true
+  }'
+```
+
+---
+
+## 客户端配置入口
+
+- [Cursor 编辑器接入](/cursor)
+- [Claude Code 终端接入](/claude-code)
+- [Cline / Roo Code 插件接入](/cline-roo-code)
+- [Web UI 与客户端工具接入](/web-ui)
+- [SDK 接入与开发指南](/sdk-integration)

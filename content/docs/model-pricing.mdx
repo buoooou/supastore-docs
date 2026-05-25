@@ -1,0 +1,103 @@
+---
+title: 模型与价格
+description: SupaStore 支持的模型系列、计费口径、并发限制与选型建议。
+date: "2026-05-25"
+updated: "2026-05-25"
+---
+
+SupaStore 以统一的 OpenAI 兼容接口聚合主流大模型。您只需要使用同一个 `Base URL` 与 API Key，即可在不同客户端或 SDK 中切换模型。
+
+> [!NOTE]
+> 实际可用模型、价格倍率与账户限额可能会随上游供应商和套餐变化调整。以 [控制台充值中心](https://supastore.cc/console/topup) 与 `/v1/models` 接口返回结果为准。
+
+---
+
+## 模型选择建议
+
+| 使用场景 | 推荐模型 | 说明 |
+| :--- | :--- | :--- |
+| AI 编程、代码审查、复杂 Agent 任务 | `claude-3-5-sonnet-latest` / `gpt-4o` | 综合能力强，适合 Cursor、Claude Code、Cline、Roo Code 等工具。 |
+| 日常问答、轻量文案、低成本批处理 | `gpt-4o-mini` / `claude-3-5-haiku-latest` | 响应快、成本低，适合高频轻量请求。 |
+| 复杂推理、数学、算法分析 | `deepseek-reasoner` / `o3-mini` | 适合需要长思考链或严谨推导的任务。 |
+| 长上下文、文档分析、多模态应用 | `gemini-2.5-pro` / `gemini-2.5-flash` | 适合长文档理解、知识库分析和多模态输入。 |
+
+---
+
+## 支持模型与计费口径
+
+| 模型厂商 | 模型 ID | 计费口径 | 常见用途 |
+| :--- | :--- | :--- | :--- |
+| Anthropic | `claude-3-5-sonnet-latest` | 按模型 Token 消耗计费 | 编程、Agent、复杂文本任务 |
+| Anthropic | `claude-3-5-haiku-latest` | 按模型 Token 消耗计费 | 轻量对话、快速分类、低延迟任务 |
+| OpenAI | `gpt-4o` | 按模型 Token 消耗计费 | 通用对话、多模态、复杂应用 |
+| OpenAI | `gpt-4o-mini` | 按模型 Token 消耗计费 | 低成本高频调用 |
+| OpenAI | `o3-mini` | 按模型 Token 消耗计费 | 推理、代码、复杂问题拆解 |
+| DeepSeek | `deepseek-chat` | 按模型 Token 消耗计费 | 通用对话、代码生成、中文场景 |
+| DeepSeek | `deepseek-reasoner` | 按模型 Token 消耗计费 | 强推理、数学、逻辑分析 |
+| Google | `gemini-2.5-pro` / `gemini-2.5-flash` | 按模型 Token 消耗计费 | 长上下文、多模态、批量分析 |
+
+---
+
+## 套餐与并发
+
+| 套餐 | 起充金额 | 适合用户 | 默认并发建议 |
+| :--- | :--- | :--- | :--- |
+| 开发者体验版 | ¥10 起 | 个人体验、脚本调试、小规模试用 | 单 Key 约 5 QPS |
+| 专业开发套餐 | ¥50 起 | Cursor、Claude Code、Cline 等高频开发工具 | 单 Key 约 20 QPS |
+| 企业与团队套餐 | ¥200 起 | 团队协作、生产服务、批量任务 | 单 Key 约 50 QPS |
+| 大额按需充值 | 按需 | 长期项目、企业采购、大规模任务 | 可联系支持定制 |
+
+> [!TIP]
+> 如果您在 Agent 工具中频繁遇到 `429` 或排队变慢，建议降低客户端并发、缩短上下文，或升级至更高并发套餐。
+
+---
+
+## 扣费与余额规则
+
+- **按实际模型消耗计费**：请求完成后，根据输入 Token、输出 Token 与所选模型价格计算扣费。
+- **流式响应同样计费**：`stream: true` 只改变返回方式，不改变 Token 统计规则。
+- **失败请求通常不扣输出费用**：鉴权失败、参数错误、余额不足等请求不会产生模型输出 Token。
+- **长上下文会显著增加成本**：AI 编程工具会自动携带代码片段、文件摘要和历史消息，建议定期压缩上下文。
+- **不同模型价格不同**：高性能推理模型通常更贵，轻量模型更适合批处理和高频调用。
+
+---
+
+## 查询账户可用模型
+
+您可以通过 `/v1/models` 获取当前账户可用模型列表：
+
+```bash
+curl "https://api.supastore.cc/v1/models" \
+  -H "Authorization: Bearer YOUR_SUPASTORE_API_KEY"
+```
+
+返回结果中的 `id` 字段就是调用接口时传入的 `model` 值。
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "gpt-4o",
+      "object": "model",
+      "owned_by": "openai"
+    }
+  ]
+}
+```
+
+---
+
+## 常见问题
+
+### 为什么同一个工具每次消耗不同？
+
+Cursor、Claude Code、Cline 这类 Agent 工具会根据当前任务自动携带上下文、文件内容和历史消息。上下文越长，输入 Token 越多，单次请求成本也会更高。
+
+### 应该给每个工具创建不同 API Key 吗？
+
+建议这样做。为 Cursor、Claude Code、Web UI、自研服务分别创建独立 API Key，可以更容易排查消耗来源，也方便单独撤销或限流。
+
+### 如何降低成本？
+
+优先使用轻量模型处理分类、摘要、格式转换等简单任务；只在复杂编程、推理或关键生成环节切换到高性能模型。

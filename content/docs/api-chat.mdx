@@ -2,6 +2,7 @@
 title: 聊天对话 (Chat)
 description: 根据对话历史创建模型响应，支持流式和非流式响应。
 date: "2026-05-25"
+updated: "2026-05-25"
 ---
 
 SupaStore 的聊天对话接口兼容 OpenAI Chat Completions API 格式。
@@ -43,7 +44,7 @@ SupaStore 的聊天对话接口兼容 OpenAI Chat Completions API 格式。
 ### 非流式请求
 
 ```bash
-curl -X POST "https://supastore.cc/v1/chat/completions" \
+curl -X POST "https://api.supastore.cc/v1/chat/completions" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
@@ -56,6 +57,75 @@ curl -X POST "https://supastore.cc/v1/chat/completions" \
     ],
     "temperature": 0.7
   }'
+```
+
+### 流式请求
+
+```bash
+curl -N "https://api.supastore.cc/v1/chat/completions" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {"role": "user", "content": "用三点说明流式响应的好处。"}
+    ],
+    "stream": true
+  }'
+```
+
+---
+
+## 🟢 Node.js 示例
+
+```javascript
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.SUPASTORE_API_KEY,
+  baseURL: "https://api.supastore.cc/v1"
+});
+
+const stream = await client.chat.completions.create({
+  model: "gpt-4o-mini",
+  messages: [
+    { role: "system", content: "你是一个简洁的中文助手。" },
+    { role: "user", content: "解释一下什么是 API 中转。" }
+  ],
+  stream: true
+});
+
+for await (const chunk of stream) {
+  process.stdout.write(chunk.choices[0]?.delta?.content || "");
+}
+```
+
+---
+
+## 🐍 Python 示例
+
+```python
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ["SUPASTORE_API_KEY"],
+    base_url="https://api.supastore.cc/v1",
+)
+
+stream = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "你是一个简洁的中文助手。"},
+        {"role": "user", "content": "解释一下什么是 API 中转。"},
+    ],
+    stream=True,
+)
+
+for chunk in stream:
+    content = chunk.choices[0].delta.content
+    if content:
+        print(content, end="", flush=True)
 ```
 
 ### 返回示例 (200 OK)
@@ -83,3 +153,15 @@ curl -X POST "https://supastore.cc/v1/chat/completions" \
   }
 }
 ```
+
+---
+
+## 常见错误码
+
+| HTTP 状态码 | 常见原因 | 处理建议 |
+| :--- | :--- | :--- |
+| `400` | `messages` 为空、JSON 格式错误、参数类型不正确 | 检查请求体，确保 `model` 和 `messages` 存在。 |
+| `401` | API Key 无效或 Header 缺失 | 检查 `Authorization: Bearer YOUR_API_KEY`。 |
+| `402` | 余额不足 | 前往控制台充值或切换到低成本模型。 |
+| `429` | 并发过高或请求过快 | 降低 Agent 工具并发，加入重试退避。 |
+| `500` | 上游模型或网关临时异常 | 稍后重试，生产环境建议配置备用模型。 |

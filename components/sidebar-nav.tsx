@@ -13,9 +13,12 @@ export interface DocsSidebarNavProps {
 
 export function DocsSidebarNav({ config }: DocsSidebarNavProps) {
   const pathname = usePathname()
+  const apiPaths = config.apiSidebar.flatMap((group) =>
+    group.items.map((item) => item.href).filter(Boolean)
+  )
 
   const isPolicies = ["/terms", "/privacy", "/refund", "/aup", "/dmca", "/license"].includes(pathname || "")
-  const isApi = (pathname || "").startsWith("/api-") || pathname === "/api"
+  const isApi = apiPaths.includes(pathname || "") || pathname === "/api"
 
   let items = config.guidesSidebar
   if (isPolicies) {

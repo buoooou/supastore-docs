@@ -5,13 +5,13 @@ const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://docs.supastore.cc"
 export const siteConfig: SiteConfig = {
   name: "SupaStore",
   description:
-    "为 AI Agent 提供自主的经济网络、智能路由与原生基础设施。让智能体不仅能思考，更能自主协作与价值交换。",
+    "SupaStore 提供高可用的大模型 API 中转服务，兼容 OpenAI 标准接口，一键接入 Cursor、Claude Code、Cline 与各类 AI 应用。",
   url: siteUrl,
   ogImage: `${siteUrl}/og.png`,
-  telegramBot: "https://t.me/supaboard_vpn_bot",
+  telegramBot: "https://t.me/supastore_api_bot",
   links: {
-    twitter: "https://x.com/intent/follow?screen_name=Supaboard00",
-    github: "https://github.com/buoooou/v2ray-clash-clients-download",
+    twitter: "https://x.com/intent/follow?screen_name=SupaStoreAI",
+    github: "https://github.com/buoooou/supastore-docs",
     tiktok: "https://www.tiktok.com/@buoooou",
     thread: "https://www.threads.net/@zhangkuo92",
     ins: "https://www.instagram.com/zhangkuo92",

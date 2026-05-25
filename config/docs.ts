@@ -39,6 +39,13 @@ export const docsConfig: DocsConfig = {
         {
           title: "API 兼容性与模型",
           href: "/api-compatibility",
+          description: "模型协议、Base URL、基础请求测试",
+          items: [],
+        },
+        {
+          title: "常见问题与排障",
+          href: "/troubleshooting",
+          description: "401、402、429、Base URL 与客户端配置问题",
           items: [],
         },
       ],
@@ -49,16 +56,19 @@ export const docsConfig: DocsConfig = {
         {
           title: "Cursor 编辑器",
           href: "/cursor",
+          description: "Cursor OpenAI Base URL 与 API Key 配置",
           items: [],
         },
         {
           title: "Claude Code 终端",
           href: "/claude-code",
+          description: "Claude Code ANTHROPIC_BASE_URL 配置",
           items: [],
         },
         {
           title: "Cline / Roo Code 插件",
           href: "/cline-roo-code",
+          description: "VS Code Agent 插件 OpenAI Compatible 配置",
           items: [],
         },
       ],
@@ -69,11 +79,13 @@ export const docsConfig: DocsConfig = {
         {
           title: "Web UI (NextChat / LobeChat)",
           href: "/web-ui",
+          description: "NextChat、LobeChat、Cherry Studio 客户端接入",
           items: [],
         },
         {
           title: "SDK 接入示例",
           href: "/sdk-integration",
+          description: "Node.js、Python、环境变量与 OpenAI SDK",
           items: [],
         },
         {
@@ -101,6 +113,13 @@ export const docsConfig: DocsConfig = {
         {
           title: "使用概述",
           href: "/api-reference",
+          description: "Base URL、Authorization、错误码与最小请求",
+          items: [],
+        },
+        {
+          title: "模型与价格",
+          href: "/model-pricing",
+          description: "模型列表、套餐并发、余额扣费、QPS",
           items: [],
         },
       ],
@@ -111,6 +130,7 @@ export const docsConfig: DocsConfig = {
         {
           title: "聊天 (Chat)",
           href: "/api-chat",
+          description: "Chat Completions、stream、Node.js、Python",
           items: [],
         },
         {

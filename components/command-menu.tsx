@@ -25,6 +25,16 @@ import {
   CommandSeparator,
 } from "@/components/ui/command"
 
+const docsSearchGroups = [
+  ...docsConfig.guidesSidebar,
+  ...docsConfig.apiSidebar,
+  ...docsConfig.policiesSidebar,
+]
+
+function getCommandValue(item: { title: string; href?: string; description?: string }) {
+  return [item.title, item.href, item.description].filter(Boolean).join(" ")
+}
+
 export function CommandMenu({ ...props }: DialogProps) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
@@ -66,23 +76,23 @@ export function CommandMenu({ ...props }: DialogProps) {
         onClick={() => setOpen(true)}
         {...props}
       >
-        <span className="hidden lg:inline-flex">Search documentation...</span>
-        <span className="inline-flex lg:hidden">Search...</span>
+        <span className="hidden lg:inline-flex">搜索文档...</span>
+        <span className="inline-flex lg:hidden">搜索...</span>
         <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
           <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput placeholder="搜索教程、API 或条款..." />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Links">
+          <CommandEmpty>没有找到相关结果。</CommandEmpty>
+          <CommandGroup heading="入口">
             {docsConfig.mainNav
               .filter((navitem) => !navitem.external)
               .map((navItem) => (
                 <CommandItem
                   key={navItem.href}
-                  value={navItem.title}
+                  value={getCommandValue(navItem)}
                   onSelect={() => {
                     runCommand(() => router.push(navItem.href as string))
                   }}
@@ -92,12 +102,12 @@ export function CommandMenu({ ...props }: DialogProps) {
                 </CommandItem>
               ))}
           </CommandGroup>
-          {docsConfig.sidebarNav.map((group) => (
+          {docsSearchGroups.map((group) => (
             <CommandGroup key={group.title} heading={group.title}>
-              {group.items.map((navItem) => (
+              {group.items.filter((navItem) => navItem.href).map((navItem) => (
                 <CommandItem
                   key={navItem.href}
-                  value={navItem.title}
+                  value={getCommandValue(navItem)}
                   onSelect={() => {
                     runCommand(() => router.push(navItem.href as string))
                   }}
@@ -111,18 +121,18 @@ export function CommandMenu({ ...props }: DialogProps) {
             </CommandGroup>
           ))}
           <CommandSeparator />
-          <CommandGroup heading="Theme">
+          <CommandGroup heading="主题">
             <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
               <SunIcon className="mr-2 h-4 w-4" />
-              Light
+              浅色
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
               <MoonIcon className="mr-2 h-4 w-4" />
-              Dark
+              深色
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
               <LaptopIcon className="mr-2 h-4 w-4" />
-              System
+              跟随系统
             </CommandItem>
           </CommandGroup>
         </CommandList>

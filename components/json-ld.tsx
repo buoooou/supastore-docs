@@ -30,21 +30,20 @@ export function OrganizationJsonLd() {
           siteConfig.links.twitter,
           siteConfig.links.github,
           siteConfig.links.telegram,
-          "https://www.youtube.com/@supaboard",
-          "https://www.instagram.com/supaboard"
         ],
         knowsAbout: [
-          "VPN Services",
-          "Proxy Services",
-          "IPLC/IEPL",
-          "Network Acceleration",
-          "Internet Privacy",
-          "Streaming Unlock"
+          "AI API Gateway",
+          "OpenAI Compatible API",
+          "Large Language Models",
+          "Claude Code",
+          "Cursor",
+          "Cline",
+          "Model Routing"
         ],
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "customer support",
-          email: "supaboard@postions.app",
+          email: "support@supastore.cc",
           availableLanguage: ["Chinese", "English", "Japanese"],
         },
       }}
