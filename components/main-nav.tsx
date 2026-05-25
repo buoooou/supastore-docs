@@ -25,7 +25,7 @@ interface MainNavProps {
 export function MainNav({ items, children }: MainNavProps) {
   return (
     <div className="flex gap-4 font-heading font-bold">
-      <Link href="/docs" className="hidden items-center space-x-2 lg:flex">
+      <Link href="/" className="hidden items-center space-x-2 lg:flex">
         <Icons.logo className="size-6" />
         <span>{siteConfig.name}</span>
       </Link>

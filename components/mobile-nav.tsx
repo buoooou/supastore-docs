@@ -37,7 +37,7 @@ export function MobileNav({
       </SheetTrigger>
       <SheetContent side="left" className="pr-0">
         <MobileLink
-          href="/docs"
+          href="/"
           className="flex items-center"
           onOpenChange={setOpen}
         >

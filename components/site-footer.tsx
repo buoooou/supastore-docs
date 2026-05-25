@@ -56,7 +56,7 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
                 </DynamicRegisterLink>
               </li>
               <li>
-                <Link href="/docs" className="hover:text-primary transition-colors">
+                <Link href="/" className="hover:text-primary transition-colors">
                   文档首页
                 </Link>
               </li>
@@ -66,18 +66,13 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
                 </a>
               </li>
               <li>
-                <Link href="/docs" className="hover:text-primary transition-colors">
+                <Link href="/" className="hover:text-primary transition-colors">
                   帮助文档
                 </Link>
               </li>
               <li>
-                <Link href="/docs/affiliate" className="hover:text-primary transition-colors">
+                <Link href="/affiliate" className="hover:text-primary transition-colors">
                   合伙人计划
-                </Link>
-              </li>
-              <li>
-                <Link href="/changelog" className="hover:text-primary transition-colors">
-                  更新日志
                 </Link>
               </li>
               <li>

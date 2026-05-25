@@ -323,7 +323,7 @@ export function ReferralAnimation() {
           邀请身边的开发者和团队接入 SupaStore，可获得高达 <span className="font-bold text-foreground underline decoration-primary decoration-2">15% 的终身循环提成</span>。一起共享被动收益！
         </p>
         <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-          <Link href="/docs/affiliate" className="candy-button text-sm group py-3">
+          <Link href="/affiliate" className="candy-button text-sm group py-3">
             查看返佣详情
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </Link>

@@ -1,31 +1,24 @@
-# Supaboard
+# SupaStore API 文档
 
-> Supaboard 提供稳定、高速的全球网络加速服务，支持 IPLC/IEPL 专线，解锁流媒体与 ChatGPT，为您提供无忧的互联网访问体验。
+> SupaStore 提供高可用、极速响应的全球大模型 API 中转服务。支持 OpenAI 标准接口协议，一键接入 Cursor、Claude Code、Cline 等各类开发辅助工具与对话客户端。
 
 ## Docs
 
-- [首页](https://www.supaboard.cc/): 了解 Supaboard 的核心特性、高速全球网络节点和 IPLC/IEPL 专线服务。
-- [下载中心](https://www.supaboard.cc/download): 获取适用于 Windows、macOS、iOS 和 Android 平台的客户端软件及配置指南。
-- [各平台教程](https://www.supaboard.cc/docs): 详细的图文教程，指导用户在不同操作系统和设备上配置及使用代理服务。
-- [定价与套餐](https://www.supaboard.cc/#pricing): 查看不同级别的订阅计划及按需付费模式。
-- [推广返佣](https://www.supaboard.cc/affiliate): 加入 Supaboard 的推广计划，邀请好友使用并获取高达 20% 的持续返利。
-
-## Blog
-
-- [博客主页](https://www.supaboard.cc/blog): 阅读最新的网络加速、流媒体解锁和 AI 工具访问指南。
-- [2026 高端与平价机场推荐](https://www.supaboard.cc/blog/2026-stable-cheap-airport-recommendation): 详细评测与对比 2026 年最稳定、性价比最高的机场节点服务。
-- [ChatGPT Plus 订阅指南](https://www.supaboard.cc/blog/chatgpt-plus-subscription-guide): 如何在中国大陆通过专线节点稳定注册与订阅 ChatGPT Plus。
-- [连接问题修复指南](https://www.supaboard.cc/blog/airport-proxy-connection-fix-2026): 排查并解决代理软件常见连接故障的技术支持文档。
+- [文档首页](https://docs.supastore.cc/): 开始配置大模型中转 API 接口。
+- [客户端下载](https://docs.supastore.cc/download): 下载推荐的多模型聚合桌面端与对话 UI 客户端。
+- [API 兼容性与模型列表](https://docs.supastore.cc/api-compatibility): 了解目前支持的模型版本以及 OpenAI 兼容层细节。
+- [Cursor 配置教程](https://docs.supastore.cc/cursor): 如何在 Cursor 编辑器中无缝使用 SupaStore API。
+- [Claude Code 配置教程](https://docs.supastore.cc/claude-code): 在本地终端集成 Anthropic 官方命令行工具的方案。
+- [邀请返佣](https://docs.supastore.cc/affiliate): 推荐他人使用 SupaStore，赚取 15% 提成。
 
 ## Key Facts
 
-- 核心服务: IPLC/IEPL 跨境专线网络加速
-- 适用场景: 流媒体解锁 (Netflix, Disney+, YouTube Premium) 及 AI 平台访问 (ChatGPT, Claude, Perplexity)
-- 支持平台: Windows (Clash Verge Rev), macOS (Clash Verge Rev), iOS (Shadowrocket), Android (Clash Meta)
-- 安全保障: 无日志记录，端到端加密
+- 核心服务: 聚合大模型 API 中转 (支持 GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, DeepSeek 等)
+- 接口地址: https://api.supastore.cc/v1
+- 适用场景: AI 编程助理 (Cursor, VS Code Plugin), 多模型聊天界面, 企业级 API 整合
+- 账户管理: 提供充值中心、实时的额度使用情况及多 Key 管理。
 
 ## Contact
 
-- Website: https://www.supaboard.cc
-- Telegram Bot: @supaboard_bot
-- Help Center: https://www.supaboard.cc/docs
+- 官网控制台: https://supastore.cc
+- 文档网站: https://docs.supastore.cc

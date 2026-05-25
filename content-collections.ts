@@ -122,7 +122,10 @@ const mdxOptions = {
 
 async function withMdx(document: any, context: any) {
   const mdx = await compileMDX(context, document, mdxOptions)
-  const slug = `/${document._meta.path}`
+  const isDoc = document._meta.directory === "docs"
+  const slug = isDoc
+    ? "/" + document._meta.path.split("/").slice(1).join("/")
+    : `/${document._meta.path}`
   const slugAsParams = document._meta.path.split("/").slice(1).join("/")
   const _id = document._meta.path
 

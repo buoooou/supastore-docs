@@ -8,16 +8,6 @@ export interface DocsConfig {
 export const docsConfig: DocsConfig = {
   mainNav: [
     {
-      title: "文档首页",
-      href: "/docs",
-      items: [],
-    },
-    {
-      title: "客户端下载",
-      href: "/download",
-      items: [],
-    },
-    {
       title: "充值中心",
       href: "https://supastore.cc/console/topup",
       items: [],
@@ -39,12 +29,12 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: "快速开始",
-          href: "/docs",
+          href: "/",
           items: [],
         },
         {
           title: "API 兼容性与模型",
-          href: "/docs/api-compatibility",
+          href: "/api-compatibility",
           items: [],
         },
       ],
@@ -54,17 +44,17 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: "Cursor 编辑器",
-          href: "/docs/cursor",
+          href: "/cursor",
           items: [],
         },
         {
           title: "Claude Code 终端",
-          href: "/docs/claude-code",
+          href: "/claude-code",
           items: [],
         },
         {
           title: "Cline / Roo Code 插件",
-          href: "/docs/cline-roo-code",
+          href: "/cline-roo-code",
           items: [],
         },
       ],
@@ -74,12 +64,17 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: "Web UI (NextChat / LobeChat)",
-          href: "/docs/web-ui",
+          href: "/web-ui",
           items: [],
         },
         {
           title: "SDK 接入示例",
-          href: "/docs/sdk-integration",
+          href: "/sdk-integration",
+          items: [],
+        },
+        {
+          title: "客户端下载",
+          href: "/download",
           items: [],
         },
       ],
@@ -89,7 +84,7 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: "返佣计划与奖励",
-          href: "/docs/affiliate",
+          href: "/affiliate",
           items: [],
         },
       ],

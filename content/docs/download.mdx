@@ -1,0 +1,70 @@
+---
+title: 客户端下载与推荐
+description: 下载并配置适合您的开发与对话客户端，使用 SupaStore 极速 API 服务。
+date: "2026-05-25"
+---
+
+SupaStore 提供标准的 **OpenAI 兼容协议** 接口。您可以使用以下推荐的优秀客户端工具，只需将接口地址（Base URL）设置为 `https://supastore.cc/v1` 并填入您的 API Key，即可实现无缝连接。
+
+---
+
+## 💻 桌面端对话客户端推荐
+
+### 🍒 Cherry Studio
+
+Cherry Studio 是一款专为电脑桌面端设计的跨平台多模型聚合管理客户端。它的界面极其精美，且支持本地知识库、多模态交互和多种主流服务的 API 中转。
+
+* **适用平台**：macOS / Windows / Linux
+* **特色**：极美 UI、多模型对比、本地向量数据库与文档检索
+* **下载链接**：[前往 Cherry Studio 官网下载](https://cherry-ai.com/)
+* **配置教程**：在设置 -> 添加自定义提供商 (OpenAI Compatible) 中，填入 Base URL `https://supastore.cc/v1` 和您的 SupaStore API 密钥即可。
+
+### 💬 LobeChat
+
+LobeChat 是功能最全面、交互极其现代的下一代大模型对话客户端。它支持插件生态（如联网搜索、画图）、语音通话 (TTS/STT) 以及跨端数据同步。
+
+* **适用平台**：macOS / Windows / iOS / Android / Web (PWA)
+* **特色**：丰富插件库、面部/语音多模态支持、PWA 离线运行
+* **GitHub 仓库**：[LobeChat GitHub](https://github.com/lobehub/lobe-chat)
+* **官网/网页版**：[前往 LobeChat 官网](https://lobehub.com/)
+
+---
+
+## 🛠️ AI 智能编程编辑器与插件
+
+### 🚀 Cursor
+
+Cursor 是一款目前全球最火爆的 AI 原生编程编辑器。它可以完全替代 VS Code 并支持完美的行内代码生成 (Cmd+K)、多文件上下文聊天 (Cmd+L) 以及智能 Tab 补全。
+
+* **适用平台**：macOS / Windows / Linux
+* **特色**：智能代码生成、全代码库检索、完全对齐 VS Code 插件生态
+* **下载链接**：[前往 Cursor 官网下载](https://cursor.com/)
+* **接入指南**：参考 [Cursor 编辑器接入指南](/cursor)。
+
+### 🧩 VS Code Cline / Roo Code 插件
+
+如果您更喜欢留在原生的 VS Code 中，那么 Cline / Roo Code 是您体验 Agentic Coding（智能体自主编程）的完美选择。它们支持多步执行命令、创建/修改文件以及根据报错自我纠正。
+
+* **适用平台**：VS Code 扩展商店
+* **特色**：自主型 Agent、本地终端执行能力
+* **接入指南**：参考 [Cline / Roo Code 插件配置](/cline-roo-code)。
+
+---
+
+## ⚡ 轻量级极速对话界面
+
+### 🌐 NextChat (ChatGPT Next Web)
+
+NextChat 是一款轻量级、零配置的开源大模型 Web 对话界面，首字加载极其迅速，并支持一键免费部署至 Vercel，提供极佳的快捷调用体验。
+
+* **适用平台**：macOS / Windows / Web / Android
+* **特色**：首字极速加载、超低资源消耗、一键分发
+* **GitHub 仓库**：[NextChat GitHub](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web)
+
+---
+
+> [!TIP]
+> **关于 API 接口地址配置**：
+> 在配置上述所有客户端时，请确保 `Base URL` (或服务器地址) 填写为：
+> `https://supastore.cc/v1`
+> 部分客户端（如 NextChat）在填入 Base URL 时会自动补全 `/v1`，如果遇到请求失败，可尝试将地址写为 `https://supastore.cc`。

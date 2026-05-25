@@ -6,17 +6,15 @@ import {
   ArrowLeft,
   ArrowRight,
   Book,
-  MessageCircle,
-  Newspaper,
+  Wallet,
+  Settings,
 } from "lucide-react"
-
-import { Icons } from "@/components/icons"
 
 export default function NotFound() {
   const router = useRouter()
 
   return (
-    <div className="w-full bg-background dark:bg-gray-950 flex items-center justify-center p-4">
+    <div className="w-full bg-background dark:bg-gray-950 flex items-center justify-center p-4 min-h-[70vh]">
       <div className="max-w-7xl mx-auto w-full space-y-16">
         <div className="text-center space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-in-out">
           <div className="space-y-2">
@@ -37,15 +35,15 @@ export default function NotFound() {
             </button>
             <Link
               href="/"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-primary-foreground hover:bg-blue-500/90 h-10 px-4 py-2"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white hover:bg-blue-500/90 h-10 px-4 py-2"
             >
-              返回首页
+              返回文档首页
             </Link>
           </div>
         </div>
         <div className="grid md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 ease-in-out">
           <Link
-            href="/docs"
+            href="/"
             className="group relative rounded-lg border p-6 hover:bg-accent transition-colors"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900">
@@ -62,42 +60,42 @@ export default function NotFound() {
               </div>
             </div>
           </Link>
-          <Link
-            href="/blog"
+          <a
+            href="https://supastore.cc"
             className="group relative rounded-lg border p-6 hover:bg-accent transition-colors"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900">
-              <Newspaper className="h-6 w-6 text-blue-500 dark:text-blue-400" />
+              <Settings className="h-6 w-6 text-blue-500 dark:text-blue-400" />
             </div>
             <div className="mt-4">
-              <h3 className="font-semibold text-foreground">博客文章</h3>
+              <h3 className="font-semibold text-foreground">管理控制台</h3>
               <p className="mt-2 text-muted-foreground">
-                阅读最新的技术干货和产品动态。
+                注册、登录并生成您的 API Key 密钥。
               </p>
               <div className="mt-3 inline-flex items-center text-blue-500 dark:text-blue-400">
-                浏览博客
+                前往控制台
                 <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
-          </Link>
-          <Link
-            href="/contact"
+          </a>
+          <a
+            href="https://supastore.cc/console/topup"
             className="group relative rounded-lg border p-6 hover:bg-accent transition-colors"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900">
-              <MessageCircle className="h-6 w-6 text-blue-500 dark:text-blue-400" />
+              <Wallet className="h-6 w-6 text-blue-500 dark:text-blue-400" />
             </div>
             <div className="mt-4">
-              <h3 className="font-semibold text-foreground">联系我们</h3>
+              <h3 className="font-semibold text-foreground">额度充值</h3>
               <p className="mt-2 text-muted-foreground">
-                找不到需要的内容？联系我们获取帮助。
+                进入钱包为您的中转账户充值额度。
               </p>
               <div className="mt-3 inline-flex items-center text-blue-500 dark:text-blue-400">
-                获取支持
+                前往充值
                 <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
-          </Link>
+          </a>
         </div>
       </div>
     </div>
