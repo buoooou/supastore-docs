@@ -22,7 +22,33 @@ export default async function DocsLayout({ children }: DocsLayoutProps) {
             mainNav={docsConfig.mainNav}
             sidebarNav={docsConfig.sidebarNav}
           />
-          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+          <div className="flex flex-1 items-center justify-between space-x-4 md:justify-end">
+            <nav className="hidden md:flex items-center space-x-4 text-sm font-medium">
+              <a
+                href="https://supastore.cc/console/topup"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                target="_blank"
+                rel="noreferrer"
+              >
+                充值中心
+              </a>
+              <a
+                href="https://supastore.cc/console"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                target="_blank"
+                rel="noreferrer"
+              >
+                控制台
+              </a>
+              <a
+                href="https://supastore.cc/console/invite"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                target="_blank"
+                rel="noreferrer"
+              >
+                邀请返佣
+              </a>
+            </nav>
             <div className="w-full flex-1 md:w-auto md:flex-none">
               <CommandMenu />
             </div>

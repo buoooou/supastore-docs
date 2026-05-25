@@ -1,0 +1,63 @@
+---
+title: 文本嵌入 (Embeddings)
+description: 将输入文本转换为多维向量，常用于向量检索及 RAG 系统开发。
+date: "2026-05-25"
+---
+
+SupaStore 提供高性能的文本嵌入向量化生成服务。
+
+### 📡 接口信息
+
+* **请求方式**: `POST`
+* **接口路径**: `/v1/embeddings`
+* **Content-Type**: `application/json`
+
+---
+
+## 📦 请求参数 (Request Body)
+
+| 参数名 | 类型 | 必填 | 默认值 | 描述 |
+| :--- | :--- | :--- | :--- | :--- |
+| **model** | string | 是 | - | 使用的嵌入模型，例如 `text-embedding-3-small` 或 `text-embedding-ada-002`。 |
+| **input** | string/array | 是 | - | 需要被向量化的文本。可以是单个字符串，也可以是包含多个字符串的数组（批处理）。 |
+| **dimensions** | integer | 否 | - | 部分模型支持自定义输出向量维度（如 `text-embedding-3-large`）。 |
+
+---
+
+## 💻 调用示例 (cURL)
+
+```bash
+curl -X POST "https://api.supastore.cc/v1/embeddings" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "text-embedding-3-small",
+    "input": "知识检索与向量化"
+  }'
+```
+
+### 返回示例 (200 OK)
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "object": "embedding",
+      "index": 0,
+      "embedding": [
+        0.0023064258,
+        -0.021272743,
+        0.015792374,
+        // ... 共 1536 维向量数值
+        -0.007892341
+      ]
+    }
+  ],
+  "model": "text-embedding-3-small",
+  "usage": {
+    "prompt_tokens": 8,
+    "total_tokens": 8
+  }
+}
+```

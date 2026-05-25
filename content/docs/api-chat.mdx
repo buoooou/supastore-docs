@@ -1,0 +1,85 @@
+---
+title: 聊天对话 (Chat)
+description: 根据对话历史创建模型响应，支持流式和非流式响应。
+date: "2026-05-25"
+---
+
+SupaStore 的聊天对话接口兼容 OpenAI Chat Completions API 格式。
+
+### 📡 接口信息
+
+* **请求方式**: `POST`
+* **接口路径**: `/v1/chat/completions`
+* **Content-Type**: `application/json`
+
+---
+
+## 🔑 请求头参数
+
+| 参数名 | 必填 | 示例/说明 |
+| :--- | :--- | :--- |
+| **Authorization** | 是 | `Bearer sk-xxxxxx`（您的 API 密钥） |
+| **Content-Type** | 是 | `application/json` |
+
+---
+
+## 📦 请求体参数 (Request Body)
+
+| 参数名 | 类型 | 必填 | 默认值 | 描述 |
+| :--- | :--- | :--- | :--- | :--- |
+| **model** | string | 是 | - | 使用的模型 ID，例如 `claude-3-5-sonnet-latest` 或 `gpt-4o`。 |
+| **messages** | array | 是 | - | 对话消息历史列表。每个消息项包含 `role` ("system", "user", "assistant") 和 `content`。 |
+| **temperature** | number | 否 | `1.0` | 采样温度，介于 `0` 到 `2` 之间。值越大输出越随机，值越小越精确。 |
+| **top_p** | number | 否 | `1.0` | 核采样概率，介于 `0` 到 `1` 之间。 |
+| **n** | integer | 否 | `1` | 每个提示词生成几条候选回答。 |
+| **stream** | boolean | 否 | `false` | 是否开启流式传输（打字机效果输出）。如果为 `true`，将使用 Server-Sent Events (SSE) 格式。 |
+| **max_tokens** | integer | 否 | - | 生成回答的最大 Token 数限制。 |
+| **stop** | string/array | 否 | null | 停止词序列。模型在遇到这些词时会停止生成。 |
+
+---
+
+## 💻 调用示例 (cURL)
+
+### 非流式请求
+
+```bash
+curl -X POST "https://api.supastore.cc/v1/chat/completions" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "gpt-4o",
+    "messages": [
+      {
+        "role": "user",
+        "content": "用两句话介绍你自己。"
+      }
+    ],
+    "temperature": 0.7
+  }'
+```
+
+### 返回示例 (200 OK)
+
+```json
+{
+  "id": "chatcmpl-8z1b...",
+  "object": "chat.completion",
+  "created": 1716666666,
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "您好！我是 GPT-4o，是 OpenAI 研发的多模态大模型。我能够为您提供高效、智能的对话与逻辑分析服务。"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 15,
+    "completion_tokens": 40,
+    "total_tokens": 55
+  }
+}
+```

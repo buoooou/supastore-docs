@@ -14,9 +14,17 @@ export interface DocsSidebarNavProps {
 export function DocsSidebarNav({ config }: DocsSidebarNavProps) {
   const pathname = usePathname()
 
-  const items = config.sidebarNav
+  const isPolicies = ["/terms", "/privacy", "/refund", "/aup", "/dmca", "/license"].includes(pathname || "")
+  const isApi = (pathname || "").startsWith("/api-") || pathname === "/api"
 
-  return items.length ? (
+  let items = config.guidesSidebar
+  if (isPolicies) {
+    items = config.policiesSidebar
+  } else if (isApi) {
+    items = config.apiSidebar
+  }
+
+  return items && items.length ? (
     <div className="w-full">
       {items.map((item, index) => (
         <div key={index} className={cn("pb-4")}>

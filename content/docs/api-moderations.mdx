@@ -1,0 +1,65 @@
+---
+title: 内容安全审查 (Moderation)
+description: 检测输入内容是否涉及违法、暴力、涉黄、恶意代码等不良违规敏感信息。
+date: "2026-05-25"
+---
+
+SupaStore 提供标准的文本和图像合规审查 API 接口，用于筛查敏感请求。
+
+### 📡 接口信息
+
+* **请求方式**: `POST`
+* **接口路径**: `/v1/moderations`
+* **Content-Type**: `application/json`
+
+---
+
+## 📦 请求参数 (Request Body)
+
+| 参数名 | 类型 | 必填 | 默认值 | 描述 |
+| :--- | :--- | :--- | :--- | :--- |
+| **input** | string/array | 是 | - | 需要审查的输入文本。可以是单个字符串或多个字符串组成的数组。 |
+| **model** | string | 否 | `text-moderation-latest` | 审查采用的安全模型，默认使用系统推荐的高精度多类别分类模型。 |
+
+---
+
+## 💻 调用示例 (cURL)
+
+```bash
+curl -X POST "https://api.supastore.cc/v1/moderations" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "input": "这里放置需要检测合规性的敏感或违规测试文本"
+  }'
+```
+
+### 返回示例 (200 OK)
+
+```json
+{
+  "id": "mod-xxxx",
+  "model": "text-moderation-latest",
+  "results": [
+    {
+      "flagged": true,
+      "categories": {
+        "sexual": false,
+        "hate": true,
+        "harassment": true,
+        "self-harm": false,
+        "violence": false,
+        "violence/graphic": false
+      },
+      "category_scores": {
+        "sexual": 0.0001,
+        "hate": 0.9520,
+        "harassment": 0.8912,
+        "self-harm": 0.0000,
+        "violence": 0.0042,
+        "violence/graphic": 0.0001
+      }
+    }
+  ]
+}
+```

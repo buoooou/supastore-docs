@@ -1,0 +1,76 @@
+---
+title: 音频 (Audio)
+description: 提供文本转语音 (TTS) 与语音转文本 (STT) 接口，兼容 Whisper、tts-1 等模型。
+date: "2026-05-25"
+---
+
+SupaStore 提供标准的音频处理 API 接口。
+
+---
+
+## 🎙️ 语音合成 (Text-to-Speech)
+
+根据输入的文本生成高保真音频。
+
+* **请求方式**: `POST`
+* **接口路径**: `/v1/audio/speech`
+* **Content-Type**: `application/json`
+
+### 📦 请求参数
+
+| 参数名 | 类型 | 必填 | 默认值 | 描述 |
+| :--- | :--- | :--- | :--- | :--- |
+| **model** | string | 是 | - | 合成模型，例如 `tts-1` 或 `tts-1-hd`。 |
+| **input** | string | 是 | - | 需要合成为音频的文本内容。最大支持 4096 字符。 |
+| **voice** | string | 是 | - | 发音人声音，支持 `alloy`, `echo`, `fable`, `onyx`, `nova`, `shimmer`。 |
+| **response_format** | string | 否 | `mp3` | 输出音频格式，支持 `mp3`, `opus`, `aac`, `flac`。 |
+
+### 💻 cURL 示例
+
+```bash
+curl -X POST "https://api.supastore.cc/v1/audio/speech" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "tts-1",
+    "input": "欢迎使用 SupaStore 高保真语音合成服务。",
+    "voice": "alloy"
+  }' \
+  --output speech.mp3
+```
+
+---
+
+## 📝 语音听写 (Speech-to-Text)
+
+将音频文件转录为文字，支持多种语言自动识别。
+
+* **请求方式**: `POST`
+* **接口路径**: `/v1/audio/transcriptions`
+* **Content-Type**: `multipart/form-data`
+
+### 📦 请求参数
+
+| 参数名 | 类型 | 必填 | 默认值 | 描述 |
+| :--- | :--- | :--- | :--- | :--- |
+| **file** | file | 是 | - | 要转写的音频文件二进制流（支持 mp3, wav, m4a, flac, ogg 等，大小在 25MB 以内）。 |
+| **model** | string | 是 | - | 使用的听写模型，如 `whisper-1`。 |
+| **language** | string | 否 | - | 输入音频的主导语言（ISO-639-1 码，如 `zh`, `en`）。 |
+
+### 💻 cURL 示例
+
+```bash
+curl -X POST "https://api.supastore.cc/v1/audio/transcriptions" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: multipart/form-data" \
+  -F file="@/path/to/meeting.mp3" \
+  -F model="whisper-1"
+```
+
+### 返回示例 (200 OK)
+
+```json
+{
+  "text": "欢迎使用 SupaStore 高保真语音合成服务。"
+}
+```

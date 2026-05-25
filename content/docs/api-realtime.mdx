@@ -1,0 +1,47 @@
+---
+title: 实时语音 (Realtime)
+description: 基于 WebSocket 的双向音视频低延迟交互接口，兼容 gpt-4o-realtime。
+date: "2026-05-25"
+---
+
+SupaStore 支持低延迟、双向音频流实时通话接口。该接口兼容 OpenAI Realtime API 标准，适用于开发实时语音助理或音视频即时交互应用。
+
+---
+
+## 📡 WebSocket 连接配置
+
+与普通 HTTP 接口不同，实时语音接口需要使用加密 WebSocket 协议进行连接：
+
+```http
+wss://api.supastore.cc/v1/realtime?model=gpt-4o-realtime
+```
+
+### 🔑 连接握手 Headers
+
+在建立 WebSocket 连接建立阶段，您需要附带以下 HTTP 报头进行验证：
+
+| 标头名 | 必填 | 示例/描述 |
+| :--- | :--- | :--- |
+| **Authorization** | 是 | `Bearer sk-xxxxxx`（您的 API 密钥） |
+| **OpenAI-Beta** | 是 | `realtime=v1` |
+
+---
+
+## 🚀 会话事件交互简述
+
+连接成功后，客户端与服务器通过 JSON 文本格式或二进制音频帧进行持续的双向事件传输。
+
+### 1. 客户端发送事件 (Client Events)
+
+- `session.update`: 更改会话配置参数（如输入输出语音格式、首选发音人）。
+- `input_audio_buffer.append`: 向网关追加输入用户的 PCM 音频原始流数据。
+- `response.create`: 强制让模型根据当前输入缓冲区数据生成回答。
+
+### 2. 服务端返回事件 (Server Events)
+
+- `session.created`: 会话连接建立成功通知。
+- `response.audio.delta`: 服务器返回的流式实时音频帧切片。
+- `response.audio_transcript.delta`: 服务器返回的流式实时回复文字转录切片。
+
+> [!TIP]
+> 详细协议帧定义及音频编解码配置（如 24kHz Mono 16-bit PCM 或 G.711 μ-law），请参考官方 SDK 实现文档。

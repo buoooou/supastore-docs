@@ -1,0 +1,81 @@
+---
+title: 视频生成 (Videos)
+description: 提供文字生成视频 (Text-to-Video) 与图像生成视频 (Image-to-Video) 接口，支持 Sora/Luma 等视频模型。
+date: "2026-05-25"
+---
+
+SupaStore 提供最新的 AI 视频生成接口。由于视频生成耗时较长，该接口通常采用**异步任务**机制，即先创建生成任务，再通过任务 ID 轮询或接收 Webhook 回调获取视频链接。
+
+### 📡 接口信息
+
+* **请求方式**: `POST`
+* **接口路径**: `/v1/videos/generations`
+* **Content-Type**: `application/json`
+
+---
+
+## 📦 请求参数 (Request Body)
+
+| 参数名 | 类型 | 必填 | 默认值 | 描述 |
+| :--- | :--- | :--- | :--- | :--- |
+| **model** | string | 是 | - | 使用的视频生成模型，例如 `sora` 或 `luma-video`。 |
+| **prompt** | string | 是 | - | 视频生成或运动轨迹的提示描述词。 |
+| **image_url** | string | 否 | - | （可选）若进行图生视频 (I2V)，传入初始帧的图像链接。 |
+| **aspect_ratio** | string | 否 | `16:9` | 视频的分辨率宽高比，支持 `16:9`, `9:16`, `1:1`。 |
+
+---
+
+## 💻 调用示例 (cURL)
+
+### 创建视频生成任务
+
+```bash
+curl -X POST "https://api.supastore.cc/v1/videos/generations" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "sora",
+    "prompt": "俯瞰繁华的东京夜市，霓虹闪烁，人群涌动，镜头平缓向前推进，雨后路面折射出五彩光影，电影感画面",
+    "aspect_ratio": "16:9"
+  }'
+```
+
+### 返回示例 (200 OK - 任务创建成功)
+
+```json
+{
+  "id": "vidtask-9b21a...",
+  "status": "pending",
+  "created_at": 1716666666,
+  "model": "sora"
+}
+```
+
+---
+
+## 🔍 查询视频任务状态
+
+获取视频任务生成的当前进度和最终下载链接。
+
+* **请求方式**: `GET`
+* **接口路径**: `/v1/videos/tasks/{task_id}`
+
+```bash
+curl -X GET "https://api.supastore.cc/v1/videos/tasks/vidtask-9b21a..." \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+### 任务完成返回示例
+
+```json
+{
+  "id": "vidtask-9b21a...",
+  "status": "completed",
+  "model": "sora",
+  "video": {
+    "url": "https://cdn.supastore.cc/generated/videos/sora-9b21a.mp4",
+    "duration": 5.0,
+    "size_bytes": 10485760
+  }
+}
+```

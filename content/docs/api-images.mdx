@@ -1,0 +1,55 @@
+---
+title: 图像生成 (Images)
+description: 根据给定的 Prompt 文本提示词生成高精度图像，兼容 DALL-E-3 等主流图像模型。
+date: "2026-05-25"
+---
+
+SupaStore 提供标准的图像生成 API 接口。
+
+### 📡 接口信息
+
+* **请求方式**: `POST`
+* **接口路径**: `/v1/images/generations`
+* **Content-Type**: `application/json`
+
+---
+
+## 📦 请求参数 (Request Body)
+
+| 参数名 | 类型 | 必填 | 默认值 | 描述 |
+| :--- | :--- | :--- | :--- | :--- |
+| **model** | string | 是 | - | 使用的画图/生成模型，例如 `dall-e-3` 或 `flux-1-dev`。 |
+| **prompt** | string | 是 | - | 图像的描述文本，最高支持 1000 字符。 |
+| **n** | integer | 否 | `1` | 生成图像的数量。注意部分模型（如 DALL-E-3）仅支持单次生成 1 张图片。 |
+| **size** | string | 否 | `1024x1024` | 图像的尺寸分辨率，例如 `1024x1024`, `1024x1792` 或 `1792x1024`。 |
+| **response_format** | string | 否 | `url` | 返回数据格式，支持 `url`（在线链接形式）或 `b64_json`（Base64 编码数据格式）。 |
+
+---
+
+## 💻 调用示例 (cURL)
+
+```bash
+curl -X POST "https://api.supastore.cc/v1/images/generations" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "dall-e-3",
+    "prompt": "一只戴着太阳眼镜在沙滩上奔跑的柯基犬，写实风格，阳光明媚，分辨率极高",
+    "size": "1024x1024",
+    "n": 1
+  }'
+```
+
+### 返回示例 (200 OK)
+
+```json
+{
+  "created": 1716666666,
+  "data": [
+    {
+      "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-xxxx/user-xxxx/img-xxxx.png?sig=...",
+      "revised_prompt": "一个写实的场景，展示一只活泼的柯基犬，戴着黑色时尚太阳眼镜，正在洒满阳光的金色沙滩上快乐地奔跑..."
+    }
+  ]
+}
+```

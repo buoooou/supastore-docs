@@ -19,10 +19,7 @@ interface MobileNavProps {
   sidebarNav?: SidebarNavItem[]
 }
 
-export function MobileNav({
-  mainNav = docsConfig.mainNav,
-  sidebarNav = docsConfig.sidebarNav,
-}: MobileNavProps) {
+export function MobileNav({ }: MobileNavProps) {
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -35,68 +32,116 @@ export function MobileNav({
           <PanelLeft />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="pr-0">
+      <SheetContent side="left" className="px-2">
         <MobileLink
           href="/"
-          className="flex items-center"
+          className="flex items-center px-4 pb-4"
           onOpenChange={setOpen}
         >
-          <Icons.logo className="size-6" />
+          <Icons.logo className="size-6 text-[#5334F5]" />
           <span className="ml-2 font-bold">{siteConfig.name}</span>
         </MobileLink>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-          <div className="flex flex-col space-y-3">
-            {mainNav?.map(
-              (item) =>
-                item.href && (
-                  <MobileLink
-                    key={item.href}
-                    href={item.href}
-                    onOpenChange={setOpen}
-                  >
-                    {item.title}
-                  </MobileLink>
-                )
-            )}
-          </div>
-          {sidebarNav?.length ? (
+          <div className="flex flex-col space-y-6 pr-6">
+
+            {/* 1. Console Action Links */}
+            <div className="flex flex-col space-y-2 pb-2">
+              <a
+                href="https://supastore.cc/console/topup"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                className="font-heading font-bold text-sm text-[#5334F5] hover:underline"
+              >
+                充值中心 ↗
+              </a>
+              <a
+                href="https://supastore.cc/console"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                className="font-heading font-bold text-sm text-[#5334F5] hover:underline"
+              >
+                控制台 ↗
+              </a>
+              <a
+                href="https://supastore.cc/console/invite"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                className="font-heading font-bold text-sm text-[#5334F5] hover:underline"
+              >
+                邀请返佣 ↗
+              </a>
+            </div>
+
+            {/* 2. 使用指南 */}
             <div className="flex flex-col space-y-2">
-              {sidebarNav.map((item, index) => (
-                <div key={index} className="flex flex-col space-y-3 pt-6">
-                  <h4 className="font-medium">{item.title}</h4>
-                  {item?.items?.length &&
-                    item.items.map((item) => (
-                      <React.Fragment key={item.href}>
-                        {!item.disabled &&
-                          (item.href ? (
-                            <MobileLink
-                              href={item.href}
-                              onOpenChange={setOpen}
-                              className="pl-4 text-muted-foreground"
-                            >
-                              {item.title}
-                              {item.label && (
-                                <span
-                                  className={`ml-2 rounded-md px-1.5 py-0.5 text-xs leading-none text-[#000000] no-underline group-hover:no-underline ${item.label === "New"
-                                    ? " bg-[#adfa1d]"
-                                    : item.label === "Hot"
-                                      ? " bg-[#dc2626] "
-                                      : ""
-                                    }`}
-                                >
-                                  {item.label}
-                                </span>
-                              )}
-                            </MobileLink>
-                          ) : (
-                            item.title
-                          ))}
-                      </React.Fragment>
-                    ))}
+              <div className="border-b pb-2 pt-2">
+                <span className="font-heading font-bold text-base text-foreground">使用指南</span>
+              </div>
+              {docsConfig.guidesSidebar.map((section, idx) => (
+                <div key={idx} className="flex flex-col space-y-2 pt-2">
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{section.title}</h4>
+                  {section.items?.filter(item => item.href).map((item) => (
+                    <MobileLink
+                      key={item.href}
+                      href={item.href!}
+                      onOpenChange={setOpen}
+                      className="pl-2 text-sm text-foreground/80 hover:text-foreground font-normal hover:underline"
+                    >
+                      {item.title}
+                    </MobileLink>
+                  ))}
                 </div>
               ))}
             </div>
-          ) : null}
+
+            {/* 3. API 文档 */}
+            <div className="flex flex-col space-y-2">
+              <div className="border-b pb-2 pt-2">
+                <span className="font-heading font-bold text-base text-foreground">API 文档</span>
+              </div>
+              {docsConfig.apiSidebar.map((section, idx) => (
+                <div key={idx} className="flex flex-col space-y-2 pt-2">
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{section.title}</h4>
+                  {section.items?.filter(item => item.href).map((item) => (
+                    <MobileLink
+                      key={item.href}
+                      href={item.href!}
+                      onOpenChange={setOpen}
+                      className="pl-2 text-sm text-foreground/80 hover:text-foreground font-normal hover:underline"
+                    >
+                      {item.title}
+                    </MobileLink>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* 4. 条款与协议 */}
+            <div className="flex flex-col space-y-2">
+              <div className="border-b pb-2 pt-2">
+                <span className="font-heading font-bold text-base text-foreground">条款与协议</span>
+              </div>
+              {docsConfig.policiesSidebar.map((section, idx) => (
+                <div key={idx} className="flex flex-col space-y-2 pt-2">
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{section.title}</h4>
+                  {section.items?.filter(item => item.href).map((item) => (
+                    <MobileLink
+                      key={item.href}
+                      href={item.href!}
+                      onOpenChange={setOpen}
+                      className="pl-2 text-sm text-foreground/80 hover:text-foreground font-normal hover:underline"
+                    >
+                      {item.title}
+                    </MobileLink>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+          </div>
         </ScrollArea>
       </SheetContent>
     </Sheet>
@@ -127,7 +172,7 @@ function MobileLink({
         router.push(href.toString())
         onOpenChange?.(false)
       }}
-      className={cn(className, "font-heading font-bold")}
+      className={cn(className)}
       {...props}
     >
       {children}

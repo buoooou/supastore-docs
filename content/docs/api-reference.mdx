@@ -1,0 +1,43 @@
+---
+title: API 概述
+description: SupaStore API 接入地址、鉴权鉴向与基本调试说明。
+date: "2026-05-25"
+---
+
+SupaStore 提供标准的 RESTful API 接口，全面兼容主流 AI 模型。通过统一的 API 格式和 Base URL，您可以零门槛地将最新 AGI 能力接入您的智能应用、编辑器插件或自研开发流中。
+
+---
+
+## 🛠️ API 端点 (Base URL)
+
+SupaStore 为开发者提供专用的高可用 API 网关端点：
+
+```http
+https://api.supastore.cc/v1
+```
+
+> [!NOTE]
+> 如果您是在 Cursor、Cline、LobeChat 等客户端中进行配置，请在 **Base URL / API 地址** 栏填写 `https://api.supastore.cc/v1` 或 `https://api.supastore.cc`（部分客户端会自动追加 `/v1`，建议根据提示配置）。
+
+---
+
+## 🔑 身份认证 (Authorization)
+
+所有 API 请求均须通过 HTTP Header 进行身份验证。您需要在 HTTP 请求头中附加 Bearer Token：
+
+```http
+Authorization: Bearer YOUR_SUPASTORE_API_KEY
+```
+
+您可以登录 [SupaStore 控制台](https://supastore.cc/console) 在 **API Keys** 菜单中生成并管理您的密钥。
+
+> [!WARNING]
+> API 密钥 (API Key) 是您额度抵扣的唯一凭证，请勿在前端代码中暴露，或将其泄露给未经信任的第三方。
+
+---
+
+## 🚀 在线调试工具
+
+我们为您提供了在线测试和调试接口：
+* 您可以访问 [Apifox 操练场](https://apifox.newapi.ai/) 在线测试和调试所有接口。
+* 各接口的详细调用参数与响应结构请查阅侧边栏的专属接口文档。

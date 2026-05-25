@@ -1,0 +1,68 @@
+---
+title: 文本补全 (Completions)
+description: 经典的纯文本续写补全接口，适用于传统的基础大模型接入。
+date: "2026-05-25"
+---
+
+SupaStore 兼容经典的 OpenAI Completions 纯文本补全接口。
+
+> [!NOTE]
+> 绝大多数现代对话模型（如 `gpt-4o` / `claude-3-5-sonnet`）均已转向结构更清晰的 [聊天对话 (Chat completions)](/api-chat) 接口。除非您必须使用 `gpt-3.5-turbo-instruct` 等纯续写模型，否则建议优先选择聊天接口。
+
+### 📡 接口信息
+
+* **请求方式**: `POST`
+* **接口路径**: `/v1/completions`
+* **Content-Type**: `application/json`
+
+---
+
+## 📦 请求参数 (Request Body)
+
+| 参数名 | 类型 | 必填 | 默认值 | 描述 |
+| :--- | :--- | :--- | :--- | :--- |
+| **model** | string | 是 | - | 使用的续写补全模型，如 `gpt-3.5-turbo-instruct`。 |
+| **prompt** | string/array | 是 | `&lt;|endoftext|&gt;` | 引导续写的基础提示词。可以是单个字符串或字符串数组。 |
+| **max_tokens** | integer | 否 | `16` | 允许生成的最大 Token 数量。 |
+| **temperature** | number | 否 | `1.0` | 采样温度。 |
+| **stream** | boolean | 否 | `false` | 是否启用流式打字输出。 |
+
+---
+
+## 💻 调用示例 (cURL)
+
+```bash
+curl -X POST "https://api.supastore.cc/v1/completions" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "gpt-3.5-turbo-instruct",
+    "prompt": "在很久很久以前，有一座神秘的森林，里面住着",
+    "max_tokens": 50,
+    "temperature": 0.6
+  }'
+```
+
+### 返回示例 (200 OK)
+
+```json
+{
+  "id": "cmpl-uq6ae...",
+  "object": "text_completion",
+  "created": 1716666666,
+  "model": "gpt-3.5-turbo-instruct",
+  "choices": [
+    {
+      "text": "一位拥有治愈力量的老魔法师，以及一群性格各异的森林小精灵。他们共同守护着森林深处的一颗散发着圣洁光芒的生命之树...",
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "length"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 12,
+    "completion_tokens": 50,
+    "total_tokens": 62
+  }
+}
+```

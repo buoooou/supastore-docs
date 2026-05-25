@@ -1,0 +1,70 @@
+---
+title: 重排序 (Rerank)
+description: 基于查询词对多个候选文档进行语义相关性重排序，适用于 RAG 检索管线调优。
+date: "2026-05-25"
+---
+
+SupaStore 提供标准的重排序 (Rerank) API 接口，兼容 Cohere 和 Jina Rerank 官方协议格式。
+
+### 📡 接口信息
+
+* **请求方式**: `POST`
+* **接口路径**: `/v1/rerank`
+* **Content-Type**: `application/json`
+
+---
+
+## 📦 请求参数 (Request Body)
+
+| 参数名 | 类型 | 必填 | 默认值 | 描述 |
+| :--- | :--- | :--- | :--- | :--- |
+| **model** | string | 是 | - | 使用的重排序模型，例如 `bge-reranker-large` 或 `cohere-rerank-v3`。 |
+| **query** | string | 是 | - | 检索的主查询文本。 |
+| **documents** | array | 是 | - | 待排序的候选文档字符串列表。 |
+| **top_n** | integer | 否 | - | 返回相关度最高的前 N 个结果。如果不填，默认返回全部排序结果。 |
+
+---
+
+## 💻 调用示例 (cURL)
+
+```bash
+curl -X POST "https://api.supastore.cc/v1/rerank" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "bge-reranker-large",
+    "query": "大模型的微调方法有哪些？",
+    "documents": [
+      "大模型微调常用的有 LoRA, QLoRA 以及 Full Fine-Tuning 等方案。",
+      "机器学习的基础算法包括线性回归、逻辑回归和支持向量机。",
+      "微调（Fine-Tuning）能够让模型在特定垂直领域的问答表现更加精准。"
+    ],
+    "top_n": 2
+  }'
+```
+
+### 返回示例 (200 OK)
+
+```json
+{
+  "results": [
+    {
+      "index": 0,
+      "relevance_score": 0.9852,
+      "document": {
+        "text": "大模型微调常用的有 LoRA, QLoRA 以及 Full Fine-Tuning 等方案。"
+      }
+    },
+    {
+      "index": 2,
+      "relevance_score": 0.8912,
+      "document": {
+        "text": "微调（Fine-Tuning）能够让模型在特定垂直领域的问答表现更加精准。"
+      }
+    }
+  ],
+  "usage": {
+    "total_tokens": 42
+  }
+}
+```
