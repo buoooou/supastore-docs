@@ -14,7 +14,7 @@
 ## Key Facts
 
 - 核心服务: 聚合大模型 API 中转 (支持 GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, DeepSeek 等)
-- 接口地址: https://api.supastore.cc/v1
+- 接口地址: https://supastore.cc/v1
 - 适用场景: AI 编程助理 (Cursor, VS Code Plugin), 多模型聊天界面, 企业级 API 整合
 - 账户管理: 提供充值中心、实时的额度使用情况及多 Key 管理。
 
