@@ -1,0 +1,268 @@
+---
+title: OpenAI Codex CLI 接入
+description: 如何安装 OpenAI Codex CLI 并将其接入 SupaStore，支持 Windows、macOS、Linux 全平台。
+date: "2026-05-29"
+---
+
+[Codex CLI](https://github.com/openai/codex) 是 OpenAI 推出的终端 AI 编程助手，可在您的本地计算机上运行。它支持沙箱策略与原子补丁编辑，能够理解代码、修改文件并执行终端命令。
+
+通过 SupaStore 中转，您无需绑定 OpenAI 官方开发者账户，即可使用 SupaStore 的 API 密钥直接启动并运行 Codex CLI。
+
+- 官方主页：[https://chatgpt.com/codex](https://chatgpt.com/codex)
+- 项目仓库：[https://github.com/openai/codex](https://github.com/openai/codex)
+
+---
+
+## 📦 安装 Codex CLI
+
+### Windows
+
+<Steps>
+
+<Step>第一步：安装 WSL2</Step>
+
+为了在 Windows 上获得最佳性能，请先安装 Windows Subsystem for Linux (WSL2)。
+
+打开 PowerShell（以管理员身份运行），执行：
+
+```powershell
+wsl --install
+```
+
+安装完成后**重启 Windows 计算机**。
+
+> [!TIP]
+> 建议使用 PowerShell 而不是 CMD。如果遇到权限问题，尝试以管理员身份运行。
+
+<Step>第二步：安装 Node.js 环境</Step>
+
+在 WSL 终端中安装 NVM（Node Version Manager）：
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+```
+
+新开一个终端窗口，进入 WSL，安装 Node.js 22：
+
+```bash
+wsl
+nvm install 22
+```
+
+> [!NOTE]
+> Node.js 版本号有时效性，请根据 [OpenAI 官网要求](https://developers.openai.com/codex/windows) 安装对应版本。
+
+<Step>第三步：安装 Codex CLI</Step>
+
+```bash
+npm i -g @openai/codex
+```
+
+验证安装：
+
+```bash
+codex --version
+```
+
+</Steps>
+
+### macOS
+
+<Steps>
+
+<Step>第一步：安装 Homebrew（已安装请跳过）</Step>
+
+[Homebrew](https://brew.sh) 是 macOS 的软件包管理器。
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+<Step>第二步：安装 Node.js 环境</Step>
+
+```bash
+brew update
+brew install node
+```
+
+验证安装：
+
+```bash
+node --version
+npm --version
+```
+
+> [!TIP]
+> 如果遇到权限问题，可能需要使用 `sudo`。建议使用 Terminal 或 iTerm2。
+
+<Step>第三步：安装 Codex CLI</Step>
+
+```bash
+npm install -g @openai/codex
+```
+
+如果遇到权限问题：
+
+```bash
+sudo npm install -g @openai/codex
+```
+
+验证安装：
+
+```bash
+codex --version
+```
+
+</Steps>
+
+### Linux
+
+<Steps>
+
+<Step>第一步：安装 Node.js 环境</Step>
+
+添加 NodeSource 仓库并安装：
+
+```bash
+# 添加 NodeSource 仓库
+sudo curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+
+# 安装 Node.js
+sudo apt-get install -y nodejs
+```
+
+验证安装：
+
+```bash
+node --version
+npm --version
+```
+
+<Step>第二步：安装 Codex CLI</Step>
+
+```bash
+# 全局安装 Codex CLI
+npm install -g @openai/codex
+```
+
+如果遇到权限问题：
+
+```bash
+sudo npm install -g @openai/codex
+```
+
+验证安装：
+
+```bash
+codex --version
+```
+
+</Steps>
+
+---
+
+## 🛠️ 配置接入 SupaStore
+
+安装完成后，需要将 Codex CLI 的 API 流量指向 SupaStore。
+
+### 方式一：修改配置文件（推荐）
+
+编辑 Codex CLI 的配置文件 `~/.codex/config.yaml`（如不存在请手动创建），添加以下内容：
+
+```yaml
+api_base: https://api.supastore.cc/v1
+api_key: YOUR_SUPASTORE_API_KEY
+```
+
+> [!IMPORTANT]
+> 请将 `YOUR_SUPASTORE_API_KEY` 替换为您在 SupaStore 控制台获取的以 `sk-` 开头的真实密钥。
+
+### 方式二：使用环境变量（临时/快速测试）
+
+#### macOS / Linux：
+
+```bash
+export OPENAI_BASE_URL="https://api.supastore.cc/v1"
+export OPENAI_API_KEY="YOUR_SUPASTORE_API_KEY"
+
+# 启动 Codex CLI
+codex
+```
+
+#### Windows PowerShell（在 WSL 外使用）：
+
+```powershell
+$env:OPENAI_BASE_URL="https://api.supastore.cc/v1"
+$env:OPENAI_API_KEY="YOUR_SUPASTORE_API_KEY"
+
+codex
+```
+
+> [!NOTE]
+> 修改接口地址后，使用所有模型（包括官方预设模型）均通过 SupaStore 接入点调用，不会使用官方账号额度。
+
+---
+
+## 🚀 启动与使用
+
+在特定项目中使用：
+
+```bash
+# 进入你的项目目录
+cd /path/to/your/project
+
+# 启动 Codex CLI
+codex
+```
+
+启动后，Codex CLI 会要求您设置权限：
+1. **允许 Codex 直接修改文件** — 适合信任的项目
+2. **Codex 修改文件需要手动授权** — 更安全，每次修改需确认
+
+### 切换模型
+
+在 Codex CLI 交互界面中输入 `/model` 命令，按 Enter 选择模型。
+
+---
+
+## 🔧 常见问题与排障
+
+### 安装时提示权限错误
+
+- 使用 `sudo` 安装：`sudo npm install -g @openai/codex`
+- 或者配置 npm 使用用户目录：
+  ```bash
+  npm config set prefix ~/.npm-global
+  export PATH=~/.npm-global/bin:$PATH
+  ```
+
+### macOS 安全设置阻止运行
+
+1. 打开 **系统偏好设置** → **安全性与隐私**。
+2. 点击 **"仍要打开"** 或 **"允许"**。
+3. 或者在终端中运行：
+   ```bash
+   sudo spctl --master-disable
+   ```
+
+### Linux 缺少依赖库
+
+```bash
+# Ubuntu/Debian
+sudo apt install build-essential
+
+# CentOS/RHEL
+sudo dnf groupinstall "Development Tools"
+```
+
+### Windows PowerShell 执行策略错误
+
+如果遇到执行策略限制，运行：
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+---
+
+*最后更新：2026-05-29*

@@ -1,0 +1,140 @@
+---
+title: Factory Droid CLI 接入
+description: 如何安装 Factory Droid CLI 并将其接入 SupaStore，实现从规划到测试的全流程自动化开发。
+date: "2026-05-29"
+---
+
+[Droid CLI](https://factory.ai/product/cli) 是由 Factory AI 开发的命令行 AI 软件工程代理工具。它允许用户通过终端与大型语言模型交互，构建、调试和重构代码，甚至创建完整的应用程序。
+
+通过 SupaStore 中转，您可以使用 SupaStore 的 API 密钥驱动 Droid CLI，无需依赖官方的付费额度。
+
+- 官方主页：[https://factory.ai/product/cli](https://factory.ai/product/cli)
+- 官方文档：[https://docs.factory.ai/cli/getting-started/quickstart](https://docs.factory.ai/cli/getting-started/quickstart)
+
+---
+
+## 📦 安装 Droid CLI
+
+### Windows
+
+<Steps>
+
+<Step>第一步：安装 Droid CLI</Step>
+
+打开 PowerShell，运行官方一键安装命令：
+
+```powershell
+irm https://app.factory.ai/cli/windows | iex
+```
+
+> [!TIP]
+> 如果遇到执行策略限制，先运行：
+> ```powershell
+> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+> ```
+
+<Step>第二步：配置接入 SupaStore</Step>
+
+安装完成后，需要修改环境变量将 API 流量指向 SupaStore。
+
+在 PowerShell 中设置环境变量：
+
+```powershell
+$env:OPENAI_BASE_URL="https://api.supastore.cc/v1"
+$env:OPENAI_API_KEY="YOUR_SUPASTORE_API_KEY"
+```
+
+如需持久化配置，可将以上变量添加到系统环境变量中。
+
+<Step>第三步：开始使用</Step>
+
+直接启动 Droid CLI：
+
+```powershell
+droid
+```
+
+在特定项目中使用：
+
+```powershell
+cd C:\path\to\your\project
+droid
+```
+
+</Steps>
+
+### macOS / Linux
+
+<Steps>
+
+<Step>第一步：安装 Droid CLI</Step>
+
+打开终端，运行：
+
+```bash
+curl -fsSL https://app.factory.ai/cli | sh
+```
+
+按照安装提示配置 PATH（根据您的 shell 选择 `~/.bashrc` 或 `~/.zshrc`）：
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+<Step>第二步：配置接入 SupaStore</Step>
+
+设置环境变量将 API 流量指向 SupaStore：
+
+```bash
+export OPENAI_BASE_URL="https://api.supastore.cc/v1"
+export OPENAI_API_KEY="YOUR_SUPASTORE_API_KEY"
+```
+
+如需持久化，将以上两行添加到 `~/.zshrc` 或 `~/.bashrc` 文件末尾。
+
+<Step>第三步：开始使用</Step>
+
+直接启动 Droid CLI：
+
+```bash
+droid
+```
+
+在特定项目中使用：
+
+```bash
+cd /path/to/your/project
+droid
+```
+
+</Steps>
+
+> [!IMPORTANT]
+> Droid CLI 要求用户登录官方 Factory AI 账号（免费注册）后才能使用。首次启动时会引导您完成登录。
+
+---
+
+## 🔧 常见问题与排障
+
+### Windows 安装时提示 permission denied
+
+- 以管理员身份运行 PowerShell。
+- 或者配置 npm 使用用户目录：
+  ```powershell
+  npm config set prefix %APPDATA%\npm
+  ```
+
+### macOS 安全设置阻止运行
+
+1. 打开 **系统偏好设置** → **安全性与隐私**。
+2. 点击 **"仍要打开"** 或 **"允许"**。
+
+### 提示 "Invalid API Key" 或 "Authentication Failed"
+
+- 请确认您的 SupaStore 密钥没有复制多余的空格，且开头为 `sk-`。
+- 确认您的 **[钱包余额](https://supastore.cc/console/topup)** 是否充足。
+
+---
+
+*最后更新：2026-05-29*

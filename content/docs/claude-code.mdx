@@ -1,7 +1,7 @@
 ---
 title: Claude Code 终端接入
-description: 如何将 Anthropic 官方的 Claude Code 命令行交互式编程助理接入 SupaStore。
-date: "2026-05-25"
+description: 如何安装 Claude Code 并将其接入 SupaStore，支持 Windows、macOS、Linux 全平台。
+date: "2026-05-29"
 ---
 
 [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) 是 Anthropic 官方推出的命令行交互式 AI 编程代理工具。它不仅能够直接读取和写入您的本地文件，还能够执行终端命令、分析 Git 提交、搜索代码库等。
@@ -10,17 +10,120 @@ date: "2026-05-25"
 
 ---
 
-## 🛠️ 配置接入方式
+## 📦 安装 Claude Code
 
-目前主要有两种方式将 Claude Code 接口流量重定向至 SupaStore：
+### Windows
+
+<Steps>
+
+<Step>第一步：安装 Node.js 环境</Step>
+
+Claude Code 需要 Node.js 环境才能运行。
+
+1. 打开浏览器访问 [https://nodejs.org/](https://nodejs.org/)，下载 **LTS** 版本。
+2. 双击 `.msi` 文件，按照安装向导完成安装，保持默认设置即可。
+3. 安装完成后，打开 PowerShell，验证安装：
+   ```powershell
+   node --version
+   npm --version
+   ```
+
+> [!TIP]
+> 建议使用 PowerShell 而不是 CMD。如果遇到权限问题，尝试以管理员身份运行。
+
+<Step>第二步：安装 Git Bash</Step>
+
+Windows 环境下需要使用 Git Bash 来安装 Claude Code（安装完成后仍然在 PowerShell 中使用）。
+
+1. 访问 [https://git-scm.com/downloads/win](https://git-scm.com/downloads/win) 下载安装包。
+2. 运行安装文件，保持默认设置一路 Next 完成安装。
+
+<Step>第三步：安装 Claude Code</Step>
+
+打开 PowerShell，运行：
+
+```powershell
+npm install -g @anthropic-ai/claude-code
+```
+
+如果提示需要将 `~/.local/bin` 加入 PATH：
+
+```powershell
+[Environment]::SetEnvironmentVariable('Path', ([Environment]::GetEnvironmentVariable('Path','User') + ";$HOME\.local\bin"), 'User')
+```
+
+验证安装：
+
+```powershell
+claude --version
+```
+
+</Steps>
+
+### macOS
+
+<Steps>
+
+<Step>第一步：安装 Claude Code CLI</Step>
+
+打开终端，运行官方安装脚本：
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+如果提示需要配置 PATH：
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
+```
+
+验证安装：
+
+```bash
+claude --version
+```
+
+</Steps>
+
+### Linux
+
+<Steps>
+
+<Step>第一步：安装 Claude Code</Step>
+
+打开终端，运行：
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+如果遇到权限问题：
+
+```bash
+sudo curl -fsSL https://claude.ai/install.sh | bash
+```
+
+验证安装：
+
+```bash
+claude --version
+```
+
+</Steps>
+
+---
+
+## 🛠️ 配置接入 SupaStore
+
+安装完成后，需要将 Claude Code 的 API 流量指向 SupaStore。主要有两种方式：
 
 ### 方式一：修改配置文件 `settings.json` (推荐)
 
 这是最稳定的持久化配置方案。即使重启终端或电脑，配置也会一直保留。
 
-1. 进入系统命令行界面。
-2. 编辑或新增 Claude Code 配置文件 `~/.claude/settings.json`（在 Windows 上通常位于 `C:\Users\您的用户名\.claude\settings.json`）。
-3. 在 JSON 配置的 `env` 字段中，增加 `ANTHROPIC_BASE_URL` 和 `ANTHROPIC_AUTH_TOKEN`。
+1. 编辑或新增 Claude Code 配置文件 `~/.claude/settings.json`（在 Windows 上通常位于 `C:\Users\您的用户名\.claude\settings.json`）。
+2. 在 JSON 配置的 `env` 字段中，增加 `ANTHROPIC_BASE_URL` 和 `ANTHROPIC_AUTH_TOKEN`。
 
 配置文件内容示例如下：
 
@@ -37,6 +140,7 @@ date: "2026-05-25"
 
 > [!IMPORTANT]
 > - 请注意将上面的 `"您的SupaStore_API_KEY"` 替换为您在 SupaStore 控制台获取的以 `sk-` 开头的真实密钥。
+> - `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` 设为 `"1"` 可以禁止非必要的遥测流量，节省 Token 消耗。
 > - 配置保存后，在命令行中直接运行 `claude` 即可自动读取该配置启动服务。
 
 ---
@@ -63,13 +167,30 @@ $env:ANTHROPIC_AUTH_TOKEN="YOUR_SUPASTORE_API_KEY"
 claude
 ```
 
+> [!NOTE]
+> 设置环境变量后，使用所有模型（包括官方预设模型）均通过 SupaStore 接入点调用，不会使用官方账号额度。
+
 ---
 
 ## 🚀 启动与使用示例
 
 当您成功配置并启动 `claude` 后，Claude Code 会扫描您的当前项目，并进入一个交互式的 Shell 命令行界面。
 
-您可以输入自然语言与它互动，例如：
+在特定项目中使用：
+
+```bash
+# 进入你的项目目录
+cd /path/to/your/project
+
+# 启动 Claude Code
+claude
+```
+
+### 切换模型
+
+在 Claude Code 交互界面中输入 `/model` 命令，按 Enter 即可选择不同的模型。通常使用默认模型即可。
+
+### 自然语言交互示例
 
 * **代码解析与问答**：
   ```bash
@@ -95,4 +216,44 @@ claude
 
 ---
 
-*最后更新：2026-05-25*
+## 🔧 常见问题与排障
+
+### macOS 安全设置阻止运行
+
+如果系统阻止运行 Claude Code：
+
+1. 打开 **系统偏好设置** → **安全性与隐私**。
+2. 点击 **"仍要打开"** 或 **"允许"**。
+3. 或者在终端中运行：
+   ```bash
+   sudo spctl --master-disable
+   ```
+
+### Linux 缺少依赖库
+
+某些 Linux 发行版需要安装额外依赖：
+
+```bash
+# Ubuntu/Debian
+sudo apt install build-essential
+
+# CentOS/RHEL
+sudo dnf groupinstall "Development Tools"
+```
+
+### 环境变量不生效
+
+请检查以下几点：
+
+- 确认修改了正确的配置文件（`.bashrc` 或 `.zshrc`）。
+- 重新启动终端或运行 `source ~/.bashrc`（或 `source ~/.zshrc`）。
+- 验证设置：`echo $ANTHROPIC_BASE_URL`。
+
+### 提示 "Invalid API Key" 或 "Authentication Failed"
+
+- 请确认您的 SupaStore 密钥没有复制多余的空格，且开头为 `sk-`。
+- 确认您的 **[钱包余额](https://supastore.cc/console/topup)** 是否充足，如果钱包额度为 0，请求会被拒绝。
+
+---
+
+*最后更新：2026-05-29*

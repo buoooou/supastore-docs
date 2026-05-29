@@ -1,7 +1,7 @@
 ---
 title: Web UI & 客户端工具接入
 description: 详细讲解如何将 SupaStore 接入 NextChat (ChatGPT Next Web)、LobeChat 以及桌面端 Cherry Studio 等工具。
-date: "2026-05-25"
+date: "2026-05-29"
 ---
 
 除了专业的代码编辑器，您也可以使用主流的网页端或桌面端聊天工具来连接 SupaStore，进行日常对话、文档翻译、角色扮演或图片生成等任务。
@@ -52,21 +52,45 @@ date: "2026-05-25"
 
 ## 🍒 Cherry Studio (桌面端推荐)
 
-[Cherry Studio](https://cherry-ai.com/) 是一款专为电脑桌面端设计的跨平台多模型聚合管理软件，交互体验极其流畅，支持本地知识库。
+[Cherry Studio](https://cherry-ai.com/) 是一款专为电脑桌面端设计的跨平台多模型聚合管理软件，交互体验极其流畅，支持本地知识库。内置 30+ 专业 AI 助手，覆盖多种工作场景。
+
+- 官网地址：[https://cherry-ai.com](https://cherry-ai.com/)
+- 下载地址：[https://cherry-ai.com/download](https://cherry-ai.com/download)
+- 官方文档：[https://docs.cherry-ai.com](https://docs.cherry-ai.com)
 
 ### 配置指南
+
+<Steps>
+
+<Step>第一步：添加 Provider</Step>
 
 1. 下载并安装 Cherry Studio 客户端。
 2. 打开软件，点击左下角的 **设置**。
 3. 在左侧模型供应商（Providers）中，选择 **OpenAI** 或新建一个 **自定义 (Custom)** 供应商。
-4. **API Key**：输入您的 SupaStore 密钥。
-5. **API 地址 (API URL)**：输入：
+
+<Step>第二步：填入 API 配置</Step>
+
+1. **API Key**：输入您的 SupaStore 密钥。
+2. **API 地址 (API URL)**：输入：
    ```bash
    https://api.supastore.cc/v1
    ```
-6. 点击 **获取模型列表**（如果有此按钮）或者手动在模型管理中添加 `claude-3-5-sonnet-latest`, `deepseek-chat`, `gpt-4o` 等模型。
-7. 在对话主页面中选择刚才配置的 OpenAI 供应侧，即可畅享顶级大模型对话。
+3. 点击 **获取模型列表**（如果有此按钮）或者手动在模型管理中添加 `claude-3-5-sonnet-latest`, `deepseek-chat`, `gpt-4o` 等模型。
+
+<Step>第三步：开始使用</Step>
+
+在对话主页面中选择刚才配置的 OpenAI 供应侧，即可畅享顶级大模型对话。
+
+</Steps>
+
+### 🎨 在 Cherry Studio 中画图
+
+Cherry Studio 还支持 AI 画图功能：
+
+1. 在模型管理中添加支持画图的模型（如 `dall-e-3`）。
+2. 在对话中选择画图模型，输入画图描述即可生成图片。
 
 ---
 
-*最后更新：2026-05-25*
+*最后更新：2026-05-29*
+

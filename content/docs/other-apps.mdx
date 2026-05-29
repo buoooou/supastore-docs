@@ -1,0 +1,89 @@
+---
+title: 更多 AI 应用接入
+description: 将 DeepChat、AionUi 等 AI 客户端接入 SupaStore，解锁更多使用场景。
+date: "2026-05-29"
+---
+
+除了编程专用的 IDE 和 CLI 工具，SupaStore 还兼容多种桌面端 AI 应用客户端。以下是已验证支持的应用及其配置方式。
+
+---
+
+## 💬 DeepChat — 全功能 AI Agent 客户端
+
+[DeepChat](https://deepchat.thinkinai.xyz) 是一款开源、跨平台的全功能 AI Agent 客户端，支持云端与本地模型、MCP 工具调用、Skills、Agent 集成和远程控制等工作流。
+
+- 官网地址：[https://deepchat.thinkinai.xyz](https://deepchat.thinkinai.xyz)
+- GitHub 仓库：[https://github.com/ThinkInAIXYZ/deepchat](https://github.com/ThinkInAIXYZ/deepchat)
+- 下载地址：[https://deepchat.thinkinai.xyz/#/download](https://deepchat.thinkinai.xyz/#/download)
+
+### 配置指南
+
+<Steps>
+
+<Step>第一步：获取 API Key</Step>
+
+在 **[SupaStore 控制台](https://supastore.cc)** 复制您的 API Key（以 `sk-` 开头）。
+
+<Step>第二步：添加 Provider</Step>
+
+1. 打开 DeepChat，进入 **设置** 页面。
+2. 找到 **Provider** 管理区域，点击添加或编辑 Provider。
+3. **API 地址**：输入 `https://api.supastore.cc/v1`。
+4. **API Key**：粘贴您的 SupaStore 密钥。
+
+<Step>第三步：开始使用</Step>
+
+返回聊天页面，打开模型列表，选择已配置的模型即可开始对话。
+
+</Steps>
+
+---
+
+## 🖥️ AionUi — 免费开源桌面办公 Agent
+
+[AionUi](https://www.aionui.com) 是一款免费、本地、开源的桌面办公 Agent，支持 Gemini CLI、Claude Code、Codex、OpenCode、Qwen Code、Goose CLI 等多种 AI 代理。它提供了完整的 GUI 界面和 WebUI 远程访问功能。
+
+- 官网地址：[https://www.aionui.com](https://www.aionui.com)
+- GitHub 仓库：[https://github.com/iOfficeAI/AionUi](https://github.com/iOfficeAI/AionUi)
+- 下载地址：[GitHub Releases](https://github.com/iOfficeAI/AionUi/releases)
+
+### 核心特性
+
+- **多会话聊天** — 多个独立上下文会话，数据本地存储
+- **多模型支持** — Gemini、OpenAI、Claude、Qwen 等主流模型
+- **多代理模式** — 同时运行多个 AI 代理，通过 MCP 统一管理
+- **文件管理** — 文件树浏览、拖拽上传、AI 智能整理
+- **预览面板** — 支持 PDF、Word、Excel、PPT、代码、Markdown、图片等 9+ 格式
+- **AI 图像生成** — 支持 Gemini 2.5 Flash 等多种图像生成模型
+- **多渠道访问** — WebUI 远程访问、Telegram 集成、飞书集成
+
+### 配置指南
+
+<Steps>
+
+<Step>第一步：打开设置</Step>
+
+在 AionUi 中进入 **设置** 页面，找到 **模型配置** Tab。
+
+<Step>第二步：添加 Provider</Step>
+
+1. 点击 **"添加模型"**。
+2. 选择 Provider 类型（支持 OpenAI Compatible）。
+3. **API 地址**：填写 `https://api.supastore.cc/v1`。
+4. **API 密钥**：粘贴您的 SupaStore `sk-` 密钥。
+
+<Step>第三步：添加模型</Step>
+
+1. 在下拉列表中选择需要使用的模型。
+2. 模型名称应与 SupaStore 中配置的模型名称一致。
+3. 选择合适的请求协议。
+
+<Step>第四步：开始使用</Step>
+
+返回聊天页面，选择已配置的模型开始对话。
+
+</Steps>
+
+---
+
+*最后更新：2026-05-29*

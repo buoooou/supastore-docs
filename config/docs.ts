@@ -62,13 +62,31 @@ export const docsConfig: DocsConfig = {
         {
           title: "Claude Code 终端",
           href: "/claude-code",
-          description: "Claude Code ANTHROPIC_BASE_URL 配置",
+          description: "Claude Code 安装与 ANTHROPIC_BASE_URL 配置",
+          items: [],
+        },
+        {
+          title: "OpenAI Codex CLI",
+          href: "/codex-cli",
+          description: "OpenAI Codex CLI 安装与接入配置",
+          items: [],
+        },
+        {
+          title: "Factory Droid CLI",
+          href: "/factory-droid-cli",
+          description: "Factory AI 终端代理工具接入",
           items: [],
         },
         {
           title: "Cline / Roo Code 插件",
           href: "/cline-roo-code",
           description: "VS Code Agent 插件 OpenAI Compatible 配置",
+          items: [],
+        },
+        {
+          title: "CC Switch 管理工具",
+          href: "/cc-switch",
+          description: "统一管理 Claude Code / Codex / Gemini CLI 配置",
           items: [],
         },
       ],
@@ -80,6 +98,12 @@ export const docsConfig: DocsConfig = {
           title: "Web UI (NextChat / LobeChat)",
           href: "/web-ui",
           description: "NextChat、LobeChat、Cherry Studio 客户端接入",
+          items: [],
+        },
+        {
+          title: "更多 AI 应用",
+          href: "/other-apps",
+          description: "DeepChat、AionUi 等 AI 客户端接入",
           items: [],
         },
         {

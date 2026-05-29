@@ -1,0 +1,114 @@
+---
+title: CC Switch — AI CLI 统一管理工具
+description: 使用 CC Switch 统一管理 Claude Code、Codex、Gemini CLI 的 Provider 配置，对接 SupaStore 一键切换。
+date: "2026-05-29"
+---
+
+[CC Switch](https://github.com/farion1231/cc-switch) 是一款开源、跨平台的 AI CLI 统一管理工具，支持 Claude Code、Codex 和 Gemini CLI 的 Provider 配置一键切换、MCP 服务器统一管理、系统提示词（Prompts）管理以及 Skills 扩展管理。
+
+如果您同时使用多个 CLI 编程助手（Claude Code / Codex / Gemini CLI），CC Switch 可以帮您告别手动编辑配置文件的烦恼。
+
+- GitHub 仓库：[https://github.com/farion1231/cc-switch](https://github.com/farion1231/cc-switch)
+- 下载地址：[GitHub Releases](https://github.com/farion1231/cc-switch/releases)
+
+---
+
+## ✨ 核心特性
+
+### 🔌 Provider 管理
+- **一键切换** — 在 Claude Code、Codex、Gemini 的 API 配置之间一键切换，无需手动修改环境变量或配置文件。
+- **多端点支持** — 每个 Provider 可配置多个端点，支持 API Key 管理与延迟测速。
+- **4 层模型配置** — 支持 Haiku / Sonnet / Opus / Custom 四级模型粒度配置。
+
+### 🛠️ MCP 服务器管理
+- **跨应用统一管理** — 单面板管理 Claude / Codex / Gemini 三端的 MCP 服务器。
+- **三种传输类型** — 支持 stdio、HTTP、SSE（Server-Sent Events）。
+- **自动同步** — 统一导入导出，双向同步。
+
+### 💬 Prompts 管理
+- **多预设系统提示词** — 无限预设、快速切换。
+- **跨应用支持** — Claude（`CLAUDE.md`）、Codex（`AGENTS.md`）、Gemini（`GEMINI.md`）。
+- **Markdown 编辑器** — CodeMirror 6，支持实时预览。
+
+---
+
+## 📦 安装方式
+
+### macOS（推荐 Homebrew）
+
+```bash
+brew tap farion1231/ccswitch
+brew install --cask cc-switch
+```
+
+### Windows
+
+从 [Releases](https://github.com/farion1231/cc-switch/releases) 下载 `.msi` 安装包或便携版 `.zip`。
+
+### Linux
+
+从 [Releases](https://github.com/farion1231/cc-switch/releases) 下载 `.deb` 包或 `.AppImage`。
+
+ArchLinux 用户：
+
+```bash
+paru -S cc-switch-bin
+```
+
+### Web 版本（无头 / SSH 服务器）
+
+适用于无桌面环境的远程服务器：
+
+```bash
+wget https://github.com/farion1231/cc-switch/releases/latest/download/cc-switch-web-linux-x64.tar.gz
+tar -xzf cc-switch-web-linux-x64.tar.gz
+cd cc-switch-web/
+./cc-switch-web
+```
+
+默认端口 `17666`，通过浏览器访问 `http://localhost:17666`。
+
+---
+
+## 🛠️ 配置接入 SupaStore
+
+<Steps>
+
+<Step>第一步：打开 CC Switch 设置</Step>
+
+启动 CC Switch 应用后，进入 **Provider** 管理页面。
+
+<Step>第二步：添加 SupaStore Provider</Step>
+
+1. 点击 **添加 Provider**。
+2. 选择需要配置的目标应用（Claude / Codex / Gemini）。
+3. 为配置起一个名称（例如 `SupaStore`）。
+4. **API 地址**：输入 `https://api.supastore.cc/v1`。
+5. **API Key**：填入您的 SupaStore `sk-` 密钥。
+6. 根据需要选择各层级模型：
+   - **主模型（必填）** — 默认使用的主力模型
+   - **Haiku 模型** — 轻量快速模型
+   - **Sonnet 模型** — 均衡模型
+   - **Opus 模型** — 最强模型
+
+<Step>第三步：一键切换</Step>
+
+保存后，在 Provider 列表中点击即可一键切换到 SupaStore 配置。CC Switch 会自动修改对应 CLI 工具的配置文件。
+
+</Steps>
+
+> [!TIP]
+> CC Switch 支持 `ccswitch://` Deep Link 协议。如果您使用的 API 管理平台支持该协议，可以实现从控制台一键导入配置到 CC Switch。
+
+---
+
+## 📎 相关链接
+
+- [GitHub 仓库](https://github.com/farion1231/cc-switch)
+- [更新日志](https://github.com/farion1231/cc-switch/blob/main/CHANGELOG.md)
+- [Web 版本仓库](https://github.com/cp-yu/cc-switch-web)
+- [CLI 版本仓库](https://github.com/thomas-jack/cc-switch-cli)
+
+---
+
+*最后更新：2026-05-29*
